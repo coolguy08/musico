@@ -5,14 +5,40 @@ import useSearch from '../hooks/useSearch';
 import { Text } from './Styles';
 import List from './List';
 import Loading from './Loading';
+import { PlaySong } from './controls';
+import { useHistory } from 'react-router-dom';
+
+function getid(perma_url){
+    return perma_url.split('/').pop();
+}
+
 function Search() {
-    const [query, setquery] = useState('');
-    
+    const [query, setquery] = useState(sessionStorage.getItem('query') || '');
+    const [issongloading, setissongloading] = useState(false)
     
     function handlechange(e){
        
         setquery(e.target.value);
+        sessionStorage.setItem('query',e.target.value);
     }
+   
+   const history=useHistory();
+    async function onListItemPress(data){
+       if(data.type=="song"){
+        await PlaySong(data,setissongloading);
+       }else if(data.type=="album" || data.type=="playlist"){
+           
+           history.push(`/view/${data.type}/${getid(data.url)}`)
+       }else if(data.type=="artist"){
+
+       }
+
+
+       
+        
+        
+    }
+
     
     const {loading,data}=useSearch(query);
     
@@ -31,10 +57,10 @@ function Search() {
             data?
             <ListWrapper>
             
-            {data.topquery.data.length>0 && <List data={data.topquery.data} title="Top Results"/>}
-            {data.songs.data.length>0 && <List data={data.songs.data} title="Songs"/>}
-            {data.albums.data.length>0 && <List data={data.albums.data} title="Albums"/>}
-            {data.playlists.length>0 && <List data={data.playlists.data} title="PlayLists"/>}
+            {data.topquery.data.length>0 && <List data={data.topquery.data} title="Top Results" handleClick={onListItemPress}/>}
+            {data.songs.data.length>0 && <List data={data.songs.data} title="Songs" handleClick={onListItemPress}/>}
+            {data.albums.data.length>0 && <List data={data.albums.data} title="Albums" handleClick={onListItemPress}/>}
+            {data.playlists.data.length>0 && <List data={data.playlists.data} title="PlayLists" handleClick={onListItemPress}/>}
             
             
 
@@ -45,7 +71,7 @@ function Search() {
             
             
         </Wrapper>
-        <Menubar/>
+        <Menubar miniplayerloading={issongloading}/>
         </>
     )
 }
@@ -70,7 +96,7 @@ padding-top:20px;
 `
 const ListWrapper=styled.div`
 padding-top:55px;
-padding-bottom:100px;
+padding-bottom:150px;
 `
 const SearchBar=styled.input`
 

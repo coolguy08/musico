@@ -13,19 +13,37 @@ function useSearch(query) {
             
         }
     }, [query])
+
     useEffect(() => {
+
         if(query==""){
             setloading(false);
             return;
         };
+
         setloading(true);
-       let cancel;
+
+        if(sessionStorage.getItem('searchdata')){
+            //if user has searched a term previously
+            const searchdata=JSON.parse(sessionStorage.getItem('searchdata'));
+            if(searchdata.query==query){
+                setdata(searchdata);
+                setloading(false);
+                return;
+            }
+
+        }
+
+        let cancel;
         axios({
             method:'GET',
             url:'https://muskan-api.herokuapp.com/api/v1/search?query='+query,
             cancelToken:new axios.CancelToken(c => cancel=c)
         }).then(res=>{
             setdata(res.data.data);
+            const searchdata=res.data.data;
+            searchdata.query=query;
+            sessionStorage.setItem('searchdata',JSON.stringify(searchdata));
             setloading(false);
         }).catch((err)=>{
                 if(axios.isCancel(err)) return;
@@ -34,7 +52,7 @@ function useSearch(query) {
             cancel();
         }
         
-    }, [query])
+    },[query])
 
     return {loading,data};
 }

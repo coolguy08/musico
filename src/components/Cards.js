@@ -4,6 +4,9 @@ import styled,{keyframes}from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
+function getid(perma_url){
+    return perma_url.split('/').pop();
+}
 
  
 function Cards(props){ 
@@ -30,14 +33,14 @@ function SimpleCard({data,width,height})
         <>
         {
             data.map((val)=>{
-                return <Wrapper key={val.id} onClick={()=>history.push(`/view/${val.type}/${val.id}`)} width={width} height={height}>
+                return <Wrapper key={getid(val.perma_url)} onClick={()=>history.push(`/view/${val.type}/${getid(val.perma_url)}`)} width={width} height={height}>
                 
                 <LazyLoadImage
     
                     effect="blur"
                     src={val.image}
-                    width="100px" 
-                    height="100px"
+                    width={width || "100px" }
+                    height={height || "100px"}
                     style={{borderRadius:'10px'}}
 
                 />

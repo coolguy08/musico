@@ -2,7 +2,8 @@ import React from 'react'
 import Menubar from './Menubar'
 import styled from 'styled-components';
 import List from './List';
-import { album } from './data';
+
+import { Text } from './Styles';
 
 function MyLibrary() {
     return (
@@ -13,8 +14,8 @@ function MyLibrary() {
              <SearchBar type="text"  placeholder="Search"/>
             </BarWrapper>
             
-            
-            <List data={album.list} image={true}/>
+            <Text>Coming soon</Text>
+            {/* <List data={album.list} image={true}/> */}
             
             
         </Wrapper>

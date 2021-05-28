@@ -17,7 +17,6 @@ function Loading() {
   )
 }
 
-
 function Skeleton2(){
 return <div class="tweet">
 <div class="skeleton">

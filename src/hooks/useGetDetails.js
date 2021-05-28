@@ -1,25 +1,28 @@
 import { useEffect, useState } from "react";
-import {GetLaunchData} from '../requests';
+import {GetDetails} from '../requests';
 
-function useGetLaunchData() {
+function imageQuality(url){
+ return url.replace('150x150','500x500').replace('50x50','500x500')
+}
+
+function useGetDetails(id,type) {
     const [loading, setloading] = useState(true);
     const [data, setdata] = useState([]);
 
     useEffect(() => {
         
         async function getdata(){
-            const d=await GetLaunchData();
-            sessionStorage.setItem('launchdata',JSON.stringify(d.data));
+            const d=await GetDetails(id,type);
+            sessionStorage.setItem(id,JSON.stringify(d.data));
+            console.log(d.data);
             setdata(d.data);
             setloading(false);
         }
 
-        if(sessionStorage.getItem('launchdata'))
+        if(sessionStorage.getItem(id))
         {
-            
-            const launchdata=JSON.parse(sessionStorage.getItem('launchdata'));
-            setdata(launchdata);
             setloading(false);
+            setdata(JSON.parse(sessionStorage.getItem(id)));
             
         }
         else
@@ -36,4 +39,4 @@ function useGetLaunchData() {
     return {loading,data}
 }
 
-export default useGetLaunchData
+export default useGetDetails;

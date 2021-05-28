@@ -6,7 +6,7 @@ import View from "./components/View";
 import Search from "./components/Search";
 import Browse from "./components/Browse";
 import MyLibrary from "./components/MyLibrary";
-import Artist from "./components/Artist";
+// import Artist from "./components/Artist";
 import Player from "./components/Player";
 import { useEffect } from "react";
 

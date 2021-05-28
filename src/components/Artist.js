@@ -2,7 +2,7 @@ import React from 'react'
 import styled  from 'styled-components';
 import { SliderWrapper } from '../styles/Home';
 import Cards from './Cards';
-import {album,data} from './data'
+import {album,data} from './data';
 import List from './List';
 import { Text } from './Styles';
 function Artist() {

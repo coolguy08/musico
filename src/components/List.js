@@ -4,28 +4,28 @@ import { GetSongURL } from '../requests';
 import { Flexbox } from '../styles/Home';
 import {Text} from './Styles';
 
-async function handleClick(data){
-    if(data.type=='song'){
+// async function handleClick(data){
+//     if(data.type=='song'){
     
-        const d=await GetSongURL(data.id);
-    console.log(data);
-    const cur_song={
-        title:data.title,
-        description:data.description,
-        image:data.image.replace('50x50','500x500'),
-        url:d.url
-    }
+//     const d=await GetSongURL(data.id);
+//     console.log(data);
+//     const cur_song={
+//         title:data.title,
+//         description:data.description || data.subtitle,
+//         image:data.image.replace('150x150','500x500').replace('50x50','500x500'),
+//         url:d.url
+//     }
 
-    localStorage.setItem('current',JSON.stringify(cur_song));
-    const audio=document.getElementById('player');
-    audio.src=d.url;
-    document.dispatchEvent(new Event("songchanged"));
-    audio.play();
-    console.log(d);
-    }
+//     localStorage.setItem('current',JSON.stringify(cur_song));
+//     const audio=document.getElementById('player');
+//     audio.src=d.url;
+//     document.dispatchEvent(new Event("songchanged"));
+//     audio.play();
+//     console.log(d);
+//     }
 
 
-}
+// }
 
 
 function List(props) {
@@ -34,7 +34,7 @@ function List(props) {
             {props.title?<Text color="white" family="Poppins" size="1.15em" padding="0 0 10px 0" bold={600}>{props.title}</Text>:''}
             {
             props.data.map((val)=>{
-                return <a onClick={()=>handleClick(val)}><ListItem key={val.id} data={val} /></a>
+                return <a onClick={()=>props.handleClick(val)}><ListItem key={val.id} data={val} /></a>
             })
             }
         </Wrapper>
@@ -52,7 +52,7 @@ function ListItem({data})
             <Image src={data.image} height="50px" width="50px"/>
             <ItemWrapper>
             <Text color="white" family="Poppins" size="0.8em" width="180px">{data.title}</Text>
-            <Text color="gray" family="Poppins" size="0.6em" width="220px">{data.description}</Text>
+            <Text color="gray" family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
             </ItemWrapper>
         </NewFlexbox>
         

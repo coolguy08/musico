@@ -7,7 +7,7 @@ function View(props){
     {
         return (
        
-            <Song/>
+            <Song id={props.match.params.id} type={props.match.params.type}/>
         
         ) 
     }
@@ -15,13 +15,13 @@ function View(props){
     {
         return (
        
-            <Album/>
+            <Album id={props.match.params.id} type={props.match.params.type}/>
           
         ) 
     }
     return (
        
-            <Album/>
+            <Album id={props.match.params.id} type={props.match.params.type}/>
         
     )
 }

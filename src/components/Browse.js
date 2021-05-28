@@ -4,8 +4,17 @@ import {Text, Wrapper,SliderWrapper,Section,Flexbox} from '../styles/Home';
 import Cards from './Cards';
 import Menubar from './Menubar';
 
+import useGetLaunchData from '../hooks/useGetLaunchData';
+import Loading from './Loading';
+
 function Browse(){
    
+const {loading,data}=useGetLaunchData();
+
+ if(loading){
+
+    return <Loading/>;
+ }
 
     return (
         <>
@@ -21,8 +30,7 @@ function Browse(){
             <Text color="gray" family="Poppins" size="0.8em"  padding="0 0 10px 20px">TOP PLAYLISTS</Text>
             <SliderWrapper>
                 <Flexbox>
-
-                    <Cards data={data.top_playlists}/>
+                      <Cards data={data.top_playlists}/>
                 </Flexbox>
             </SliderWrapper>
          </Section>
@@ -30,7 +38,7 @@ function Browse(){
          
 
          {/*Radio Stations*/}
-         {/* <Section>
+         <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Radio Stations</Text>
             <SliderWrapper>
                 <Flexbox  width={`${(data.radio.length/2)*110}px`} wrap>
@@ -38,7 +46,7 @@ function Browse(){
                      
                 </Flexbox>
             </SliderWrapper>
-         </Section> */}
+         </Section>
 
         
 

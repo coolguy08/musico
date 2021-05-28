@@ -1,20 +1,38 @@
-import React,{useEffect}from 'react'
+import React,{useEffect, useState}from 'react'
 import {album,data} from './data';
 import styled from 'styled-components';
 import List from './List';
 import Cards from './Cards';
 import {SliderWrapper} from '../styles/Home';
 import Menubar from './Menubar';
+import useGetDetails from '../hooks/useGetDetails';
+import Loading from './Loading';
+import { PlaySong } from './controls';
 
+function imageQuality(url){
+  return url.replace('150x150','500x500').replace('50x50','500x500')
+ }
 
-function Album() {
+function Album(props){
+           
+      const [issongloading, setissongloading] = useState(false)
+      const {loading,data}=useGetDetails(props.id,props.type);
 
+      async function onListItemPress(data){
+       
+        await PlaySong(data,setissongloading);
+        
+      }
+    
+      if(loading){
+        return <><Loading/><Menubar/></>
+      }
 
     return (
       <>
         <Wrapper>
           <ImageWrapper padding="30px 0 0 0">
-             <Image src={album.image}/>
+             <Image src={imageQuality(data.image)}/>
           </ImageWrapper>
 
           <IconWrapper>
@@ -22,8 +40,8 @@ function Album() {
             <Icon background="green" width="50px" height="50px" color="white" BorderRadius="50%"><i class="fa fa-play"></i></Icon>
           </IconWrapper>
 
-          <Text color="white" family="Poppins" size="1.2em" padding="10px 0 0 20px">{album.title}</Text>
-          <Text color="gray" family="Poppins" size="0.9em" padding="5px 0 0 20px">{album.header_desc}</Text>
+          <Text color="white" family="Poppins" size="1.2em" padding="10px 0 0 20px">{data.title}</Text>
+          <Text color="gray" family="Poppins" size="0.9em" padding="5px 0 0 20px">{data.header_desc}</Text>
           
           {/* section for download and share and plays */}
           <Flexbox>
@@ -32,17 +50,20 @@ function Album() {
           <Text color="gray" family="Poppins" size="0.8em">{parseInt(album.list[0].play_count).toLocaleString('en-US')} Plays</Text>
           </Flexbox>
           
-           <List data={album.list}/>
+          <ListWrapper>
+              <List data={data.list} handleClick={onListItemPress}/>
+          </ListWrapper>
+           
            
            {/*you might like Section*/}
-         <Section>
+         {/* <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">You Might Like</Text>
             <SliderWrapper>
                 <Flexbox>
                     <Cards data={data.new_trending} width="150px" height="150px"/>
                 </Flexbox>
             </SliderWrapper>
-         </Section>
+         </Section> */}
 
 
 
@@ -53,7 +74,7 @@ function Album() {
          </Footer>
 
         </Wrapper>
-        <Menubar/>
+        <Menubar miniplayerloading={issongloading}/>
         </>
     )
 }
@@ -70,7 +91,10 @@ width:100vw;
 const Section=styled.div`
 padding-bottom:30px
 `
-
+const ListWrapper=styled.div`
+padding-left:20px;
+padding-bottom:100px;
+`
 
 
 const Flexbox=styled.div`

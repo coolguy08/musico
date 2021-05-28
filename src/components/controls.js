@@ -1,3 +1,5 @@
+import { GetSongURL } from "../requests";
+
 const audio=document.getElementById('player');
 
 let song_status,seeker;
@@ -34,36 +36,7 @@ if ('mediaSession' in window.navigator){
     
   }
 
-audio.ontimeupdate=()=>{
-    initialize();
-    if(!audio.paused)//if the song is playing
-    {
-      song_status.className='fa fa-pause';
-    }
-    
-    if(seeker!=null){
 
-      seeker.max=audio.duration;
-      seeker.value=audio.currentTime;
-    }
-    // songimg.style="animation-play-state:play";
-     
-    // //song_status.className='fa fa-pause fa-lg';
-    // //console.log(Math.round(audio.duration-audio.currentTime));
-    
-    // const cur_song=JSON.parse(localStorage.getItem('song'));
-    // cur_song.currenttime=audio.currentTime;
-    // localStorage.setItem('song',JSON.stringify(cur_song));
-
-
-
-
-// document.getElementById('current').innerHTML=new Date(audio.currentTime*1000).toISOString().substr(14, 5)
-
-// document.getElementById('duration').innerHTML=new Date(audio.duration?audio.duration*1000:237*1000).toISOString().substr(14, 5)
-
-
-}
 
 audio.onplay=()=>{
     //when song start playing add the meta data
@@ -88,6 +61,31 @@ function MediaSessionApi(){
       });
 }
 
+
+async function PlaySong(data,setloading){
+
+    setloading(true);
+    const d=await GetSongURL(data.id);
+    
+    const cur_song={
+        title:data.title,
+        description:data.description || data.subtitle,
+        image:data.image.replace('150x150','500x500').replace('50x50','500x500'),
+        url:d.url
+    }
+
+    localStorage.setItem('current',JSON.stringify(cur_song));
+
+    setloading(false);
+    audio.src=d.url;
+    //document.dispatchEvent(new Event("songchanged"));
+    audio.play();
+    console.log(d);
+
+}
+
 export{
-    togglePlay
+    togglePlay,
+    PlaySong
+
 }

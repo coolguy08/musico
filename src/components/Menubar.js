@@ -3,27 +3,27 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { togglePlay } from './controls';
 import {Text} from './Styles';
-function Menubar(){
+function Menubar({miniplayerloading}){
+    
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')));
 
-
     useEffect(() => {
-        const evnt=document.addEventListener("songchanged",()=>{
-
-            setsong(JSON.parse(localStorage.getItem('current')));
-        })
+       
+          setsong(JSON.parse(localStorage.getItem('current')));
+       
         
         return () => {
             
         }
-    }, [])
+    }, [miniplayerloading])
 
     const pathname=window.location.pathname;
     const history=useHistory();
+    
     return (
         <Wrapper>
 
-        {song && <NowPlaying song={song} history={history}/>}
+        {song  && <NowPlaying song={song} history={history} loading={miniplayerloading}/>}
         
         <MenuWrapper>
             <a onClick={()=>history.push('/home')}>
@@ -59,18 +59,6 @@ function Menubar(){
 }
 
 
-function NowPlaying({song,history}){
-      return <SmallPlayer>
-            <Image src={song.image} width="50px" height="50px" onClick={()=>history.push('/player')}/>
-            <TextWrapper onClick={()=>history.push('/player')}>
-            <Text color="white" family="Poppins" size="0.9em" width="200px">{song.title}</Text>
-            <Text color="gray" family="Poppins" size="0.7em" width="220px">{song.description}</Text>
-            </TextWrapper>
-          
-            <PlayerIcon onClick={()=>togglePlay()}><i class="fa fa-play" id="toggleplay"></i></PlayerIcon>
-          </SmallPlayer>
-}
-
 
 function MenuItem({children,active})
 {
@@ -79,6 +67,25 @@ function MenuItem({children,active})
         <MenuItemWrapper active={active}>{children}</MenuItemWrapper>
     )
 }
+
+function NowPlaying({song,history,loading}){
+    const audio=document.getElementById('player');
+      return <SmallPlayer>
+            <Image src={song.image} width="50px" height="50px" onClick={()=>history.push('/player')}/>
+            <TextWrapper onClick={()=>history.push('/player')}>
+            <Text color="white" family="Poppins" size="0.9em" width="200px">{song.title}</Text>
+            <Text color="gray" family="Poppins" size="0.7em" width="220px">{song.description || song.subtitle}</Text>
+            </TextWrapper>
+             {
+                 loading?
+                 <div className="loader" style={{margin:"15px"}}></div>:
+                 <PlayerIcon onClick={()=>togglePlay()}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></PlayerIcon>
+
+             }
+          </SmallPlayer>
+}
+
+
 
 export default Menubar
 
