@@ -60,7 +60,7 @@ function Home() {
          <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Radio Stations</Text>
             <SliderWrapper>
-                <Flexbox  width={`${(data.radio.length/2)*110}px`} wrap>
+                <Flexbox  width={`${(data.radio.length/2)*110}px`} wrap="wrap">
                     <Cards data={data.radio} cardtype="circle"/>
                      
                 </Flexbox>
@@ -83,7 +83,7 @@ function Home() {
          <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Explore</Text>
             <SliderWrapper >
-                <Flexbox width={`${(data.browse_discover.length/2)*165}px`} wrap>
+                <Flexbox width={`${(data.browse_discover.length/2)*165}px`} wrap="wrap">
                     <Cards data={data.browse_discover} cardtype="rectangle"/>
                 </Flexbox>
            

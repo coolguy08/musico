@@ -1,5 +1,5 @@
-import React,{useEffect, useState}from 'react'
-import {album,data} from './data';
+import React,{useState}from 'react'
+import {album} from './data';
 import styled from 'styled-components';
 import List from './List';
 import Cards from './Cards';
@@ -126,7 +126,7 @@ padding:${props=>props.padding};
 display:flex;
 justify-content:center;
 width:100vw;
-background:linear-gradient(to bottom, red, #2a2d36);
+background:linear-gradient(to bottom, #d6d3d3, #2a2d36);
 
 `
 

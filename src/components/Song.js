@@ -10,6 +10,9 @@ import Loading from './Loading';
 import List from './List';
 import { PlaySong } from './controls';
 
+function imageQuality(url){
+  return url.replace('150x150','500x500').replace('50x50','500x500')
+ }
 
 function Song(props) {
 
@@ -29,8 +32,8 @@ function Song(props) {
     return (
       <>
         <Wrapper>
-          <ImageWrapper padding="30px 0 0 0">
-             <Image src={data.songs[0].image} width="200px" height="200px" borderradius="10px"/>
+          <ImageWrapper padding="30px 0 30px 0">
+             <Image src={imageQuality(data.songs[0].image)} width="200px" height="200px" borderradius="10px"/>
           </ImageWrapper>
 
           <IconWrapper>
@@ -66,8 +69,11 @@ function Song(props) {
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Artists</Text>
             <div>
             {
-                data.songs[0].more_info.artistMap.artists.map((artist)=>{
-                   return <ArtistMap>
+                data.songs[0].more_info.artistMap.primary_artists.map((artist,index)=>{
+                  if(index>4){
+                    return <></>;
+                  }
+                   return <ArtistMap key={index}>
                         <Image src={artist.image}
                         height="50px" width="50px" borderradius="50px"
                         />
@@ -148,8 +154,8 @@ padding:${props=>props.padding};
 display:flex;
 justify-content:center;
 width:100vw;
-background:linear-gradient(to bottom, orange, #2a2d36);
-
+background:linear-gradient(to top, #ffaa0d, #2a2d36);
+clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
 `
 
 const Image=styled.img`
@@ -160,7 +166,8 @@ border-radius:${props=>props.borderradius}
 const IconWrapper=styled.div`
 display:flex;
 justify-content:center;
-padding-top:20px;
+padding-top:0px;
+margin-top:-10px;
 padding-left:50%;
 gap:10px;
 
