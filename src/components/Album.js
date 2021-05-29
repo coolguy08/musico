@@ -23,6 +23,7 @@ function Album(props){
         await PlaySong(data,setissongloading);
         
       }
+     
     
       if(loading){
         return <><Loading/><Menubar/></>

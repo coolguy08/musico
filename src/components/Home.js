@@ -44,7 +44,8 @@ function Home() {
          </Section>
 
          {/*Artists*/}
-         <Section>
+         { data.artist_recos &&
+             <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Search By Artists</Text>
             <SliderWrapper>
                 <Flexbox >
@@ -53,6 +54,7 @@ function Home() {
                 </Flexbox>
             </SliderWrapper>
          </Section>
+         }
 
          {/*Radio Stations*/}
          <Section>
