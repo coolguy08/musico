@@ -5,13 +5,23 @@ function useGetLaunchData() {
     const [loading, setloading] = useState(true);
     const [data, setdata] = useState([]);
 
+    
+
     useEffect(() => {
         
         async function getdata(){
             const d=await GetLaunchData();
-            sessionStorage.setItem('launchdata',JSON.stringify(d.data));
-            setdata(d.data);
-            setloading(false);
+            
+            if(d.data!=undefined){
+                sessionStorage.setItem('launchdata',JSON.stringify(d.data));
+                setdata(d.data);
+                setloading(false);
+            }
+            else{
+                alert("No Internet");
+            }
+            
+            
         }
 
         if(sessionStorage.getItem('launchdata'))
@@ -31,6 +41,8 @@ function useGetLaunchData() {
             
         }
     }, [])
+
+   
     
     
     return {loading,data}

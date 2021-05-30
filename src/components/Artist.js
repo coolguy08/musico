@@ -1,18 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled  from 'styled-components';
+import useGetDetails from '../hooks/useGetDetails';
 import { SliderWrapper } from '../styles/Home';
 import Cards from './Cards';
-import {album,data} from './data';
+import { PlaySong } from './controls';
 import List from './List';
+import Loading from './Loading';
+import Menubar from './Menubar';
 import { Text } from './Styles';
-function Artist() {
+function Artist(props) {
+
+    console.log(props);
+    const [issongloading, setissongloading] = useState(false)
+
+
+    async function onListItemPress(data){
+       
+        await PlaySong(data,setissongloading);
+        
+      }
+      function imageQuality(url){
+        return url.replace('150x150','500x500').replace('50x50','500x500')
+       }
+const {loading,data}=useGetDetails(props.match.params.id,'artist')
+
+if(loading){
+    return <><Loading/><Menubar/></>
+}
+
+
     return (
+        <>
         <Wrapper>
             
             
-            <Banner img="http://sagraecdnems03.cdnsrv.jio.com/c.saavncdn.com/artists/Jubin_Nautiyal_002_20180507091834_500x500.jpg">
+            <Banner img={imageQuality(data.image)}>
                 <ArtistName>
-                    <Text color="white" family="Poppins" size="1.3em" bold="600">Jubin Nautiyal</Text>
+                    <Text color="white" family="Poppins" size="1.3em" bold="600">{data.name}</Text>
                 </ArtistName>
             
             </Banner>
@@ -21,18 +45,51 @@ function Artist() {
           <Flexbox>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-arrow-down"></i></Icon>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-share-alt"></i></Icon>
-          <Text color="gray" family="Poppins" size="0.8em">18,776,316 Listeners</Text>
+          <Text color="gray" family="Poppins" size="0.9em">{data.subtitle}</Text>
           </Flexbox>
            
-          <Text color="white" family="Poppins" size="1.2em" bold="600" padding="20px 0 0px 20px">Top Songs</Text>
-          <List data={album.list} />
+          {/*Latest realease*/}
+          <Section paddingTop="20px">
+            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Latest Releases</Text>
+            <SliderWrapper>
+                <Flexbox>
+                    <Cards data={data.latest_release} width="150px" height="150px"/>
+                </Flexbox>
+            </SliderWrapper>
+         </Section>
+
+         <ListWrapper>
+         <List data={data.topSongs} handleClick={onListItemPress} title="Top Songs"/>
+         </ListWrapper>
+          
             
+         
+         {/*Dedicated artist pplaylist*/}
+         <Section >
+            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Just {data.name}</Text>
+            <SliderWrapper>
+                <Flexbox>
+                    <Cards data={data.dedicated_artist_playlist} width="150px" height="150px"/>
+                </Flexbox>
+            </SliderWrapper>
+         </Section>
+
+          {/*Featured In*/}
+          <Section>
+            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Featured In</Text>
+            <SliderWrapper>
+                <Flexbox>
+                    <Cards data={data.featured_artist_playlist} width="150px" height="150px"/>
+                </Flexbox>
+            </SliderWrapper>
+         </Section>
+
           {/*Top Albums of current singer*/}
-         <Section>
+          <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Top Albums</Text>
             <SliderWrapper>
                 <Flexbox>
-                    <Cards data={data.top_playlists} width="150px" height="150px"/>
+                    <Cards data={data.topAlbums} width="150px" height="150px"/>
                 </Flexbox>
             </SliderWrapper>
          </Section>
@@ -42,12 +99,20 @@ function Artist() {
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Singles</Text>
             <SliderWrapper>
                 <Flexbox>
-                    <Cards data={data.new_trending} width="150px" height="150px"/>
+                    <Cards data={data.singles} width="150px" height="150px"/>
                 </Flexbox>
             </SliderWrapper>
          </Section>
+         
+         {/* About Section */}
+         {/* <Section>
+             {data.bio && console.log(JSON.parse(data.bio))}
+
+         </Section> */}
 
         </Wrapper>
+        <Menubar miniplayerloading={issongloading}/>
+        </>
     )
 }
 
@@ -55,11 +120,16 @@ export default Artist
 
 
 const Wrapper=styled.div`
-
+padding-bottom:100px
 
 `
+const ListWrapper=styled.div`
+padding-left:20px;
+padding-bottom:20px;
+`
 const Section=styled.div`
-padding-bottom:30px
+padding-top:${props=>props.paddingTop||''};
+padding-bottom:20px
 `
 const Icon=styled.button`
 background:${props=>props.background};

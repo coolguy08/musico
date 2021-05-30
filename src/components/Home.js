@@ -11,7 +11,7 @@ function Home() {
     const {loading,data}=useGetLaunchData();
 
     if(loading || !data){
-        return <Loading/>
+        return <><Loading/><Menubar/></>
     }
 
     return (
@@ -109,5 +109,5 @@ function Home() {
      )
 }
 
-export default Home
+export default React.memo(Home)
 

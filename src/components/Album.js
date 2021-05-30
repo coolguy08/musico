@@ -1,5 +1,4 @@
 import React,{useState}from 'react'
-import {album} from './data';
 import styled from 'styled-components';
 import List from './List';
 import Cards from './Cards';
@@ -48,7 +47,7 @@ function Album(props){
           <Flexbox>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-arrow-down"></i></Icon>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-share-alt"></i></Icon>
-          <Text color="gray" family="Poppins" size="0.8em">{parseInt(album.list[0].play_count).toLocaleString('en-US')} Plays</Text>
+          <Text color="gray" family="Poppins" size="0.8em">{parseInt(data.list[0].play_count).toLocaleString('en-US')} Plays</Text>
           </Flexbox>
           
           <ListWrapper>
@@ -70,8 +69,8 @@ function Album(props){
 
          {/* Bottom fotter */}
          <Footer>
-           <Text color="gray" family="Poppins" size="0.8em">{album.list_count} Songs</Text>
-           <Text color="gray" family="Poppins" size="0.8em">{album.more_info.copyright_text}</Text>
+           <Text color="gray" family="Poppins" size="0.8em">{data.list_count} Songs</Text>
+           <Text color="gray" family="Poppins" size="0.8em">{data.more_info.copyright_text}</Text>
          </Footer>
 
         </Wrapper>
@@ -86,6 +85,7 @@ export default Album
 const Wrapper=styled.div`
 
 width:100vw;
+padding-bottom:150px;
 
 
 `
@@ -94,7 +94,7 @@ padding-bottom:30px
 `
 const ListWrapper=styled.div`
 padding-left:20px;
-padding-bottom:100px;
+
 `
 
 
@@ -161,5 +161,5 @@ const Footer=styled.div`
 display:flex;
 flex-direction:column;
 align-items:center;
-padding-bottom:30px;
+
 `

@@ -1,5 +1,4 @@
 import React,{useEffect}from 'react'
-import {data} from './data';
 import {Text, Wrapper,SliderWrapper,Section,Flexbox} from '../styles/Home';
 import Cards from './Cards';
 import Menubar from './Menubar';
@@ -13,7 +12,7 @@ const {loading,data}=useGetLaunchData();
 
  if(loading){
 
-    return <Loading/>;
+    return <><Loading/><Menubar/></>;
  }
 
     return (

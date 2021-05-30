@@ -1,11 +1,45 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState} from 'react'
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { togglePlay } from './controls';
 import {Text} from './Styles';
+
+
+
+function setactivetab(tab){
+
+    sessionStorage.setItem('tab',tab);
+}
+
+function getactivetab(){
+return sessionStorage.getItem('tab');
+}
+
 function Menubar({miniplayerloading}){
+
+    const [tab, settab] = useState(1);
     
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')));
+
+    const pathname=window.location.pathname;
+
+    useEffect(() => {
+        
+
+        switch(pathname){
+            case '/home':settab(1);setactivetab(1);break;
+            case '/search':settab(2);setactivetab(2);break;
+            case '/browse':settab(3);setactivetab(3);break;
+            case '/mylibrary':settab(4);setactivetab(4);break;
+            default:settab(getactivetab());
+        }
+        
+        
+        return () => {
+        }
+
+    }, [])
+
 
     useEffect(() => {
        
@@ -17,8 +51,11 @@ function Menubar({miniplayerloading}){
         }
     }, [miniplayerloading])
 
-    const pathname=window.location.pathname;
+   
     const history=useHistory();
+
+
+    
     
     return (
         <Wrapper>
@@ -27,28 +64,28 @@ function Menubar({miniplayerloading}){
         
         <MenuWrapper>
             <a onClick={()=>history.push('/home')}>
-            <MenuItem active={pathname=='/home'?true:false}>
+            <MenuItem active={tab==1?true:false}>
                <Icon><i class="fa fa-home"></i></Icon>
                <Text family="Poppins">Home</Text>
             </MenuItem>
 
             </a>
             <a onClick={()=>history.push('/search')}>
-            <MenuItem active={pathname=='/search'?true:false}>
+            <MenuItem active={tab==2?true:false}>
                <Icon><i class="fa fa-search"></i></Icon>
                <Text family="Poppins">Search</Text>
             </MenuItem>
             </a>
             
             <a onClick={()=>history.push('/browse')}>
-            <MenuItem active={pathname=='/browse'?true:false}>
+            <MenuItem active={tab==3?true:false}>
                <Icon><i class="fa fa-compass"></i></Icon>
                <Text family="Poppins">Browse</Text>
             </MenuItem>
             </a>
 
             <a onClick={()=>history.push('/mylibrary')}>
-            <MenuItem active={pathname=='/mylibrary'?true:false}>
+            <MenuItem active={tab==4?true:false}>
                 <Icon><i class="fa fa-user"></i></Icon>
                <Text family="Poppins">My Library</Text>
             </MenuItem>
@@ -70,11 +107,12 @@ function MenuItem({children,active})
 
 function NowPlaying({song,history,loading}){
     const audio=document.getElementById('player');
+    
       return <SmallPlayer>
             <Image src={song.image} width="50px" height="50px" onClick={()=>history.push('/player')}/>
             <TextWrapper onClick={()=>history.push('/player')}>
             <Text color="white" family="Poppins" size="0.9em" width="200px">{song.title}</Text>
-            <Text color="gray" family="Poppins" size="0.7em" width="220px">{song.description || song.subtitle}</Text>
+            <Text color="gray" family="Poppins" size="0.7em" width="220px"><marquee>{song.description || song.subtitle}</marquee></Text>
             </TextWrapper>
              {
                  loading?
@@ -87,7 +125,7 @@ function NowPlaying({song,history,loading}){
 
 
 
-export default Menubar
+export default React.memo(Menubar);
 
 const PlayerIcon=styled.a`
 color:white;

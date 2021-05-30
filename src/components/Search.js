@@ -30,7 +30,8 @@ function Search() {
            
            history.push(`/view/${data.type}/${getid(data.url)}`)
        }else if(data.type=="artist"){
-
+           
+           history.push(`/artist/${getid(data.url)}`)
        }
 
 

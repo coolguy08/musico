@@ -1,5 +1,5 @@
 import React,{useEffect, useState}from 'react'
-import {song,data} from './data';
+
 import styled from 'styled-components';
 
 import Cards from './Cards';
