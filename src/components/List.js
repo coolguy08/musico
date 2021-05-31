@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
 import { Flexbox } from '../styles/Home';
 import {Text} from './Styles';
@@ -7,8 +7,10 @@ import {Text} from './Styles';
 
 
 function List(props){
+    
     return (
         <Wrapper>
+            
             {   props.title?<Text color="white" family="Poppins" size="1.15em" padding="0 0 10px 0" bold={600}>{props.title}</Text>:''}
             {
                 props.data.map((val)=>{
@@ -22,15 +24,16 @@ function List(props){
 
 function ListItem({data})
 {
-
+ 
+    const [cursongid, setcursongid] = useState();
 
     return (
         <NewFlexbox>
-          
+             
             <Image src={data.image} height="50px" width="50px"/>
             <ItemWrapper>
-            <Text color="white" family="Poppins" size="0.8em" width="180px">{data.title}</Text>
-            <Text color="gray" family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
+            <Text color={data.id==JSON.parse(localStorage.getItem('current')).id?"green":"white"} family="Poppins" size="0.8em" width="180px">{data.title}</Text>
+            <Text color={data.id==JSON.parse(localStorage.getItem('current')).id?"green":"gray"} family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
             </ItemWrapper>
         </NewFlexbox>
         

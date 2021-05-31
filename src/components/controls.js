@@ -1,4 +1,4 @@
-import { GetSongURL } from "../requests";
+import { GetSongs, GetSongURL } from "../requests";
 
 const audio=document.getElementById('player');
 
@@ -556,16 +556,20 @@ audio.onpause=()=>{
 }
 
 audio.ontimeupdate=()=>{
+    initialize();
     localStorage.setItem('currentTime',audio.currentTime);
     
-    }
+}
 
 audio.onplay=()=>{
     //when song start playing add the meta data
     initialize();
     MediaSessionApi();
-
-    song_status.className='fa fa-pause';
+    if(song_status){
+      song_status.className='fa fa-pause';
+    }
+    
+    
   
     
 }
@@ -599,22 +603,32 @@ function MediaSessionApi(){
 async function PlaySong(data,setloading){
      
     setloading(true);
-    const d=await GetSongURL(data.id);
-    
-    const cur_song={
-        title:data.title,
-        description:data.description || data.subtitle,
-        image:data.image.replace('150x150','500x500').replace('50x50','500x500'),
-        url:d.url
-    }
+     const cur_song={
+      id:data.id,
+      title:data.title,
+      description:data.description || data.subtitle,
+      image:data.image.replace('150x150','500x500').replace('50x50','500x500'),
+      //url:d.url
+     }
 
-    localStorage.setItem('current',JSON.stringify(cur_song));
+  localStorage.setItem('current',JSON.stringify(cur_song));
+  const d=await GetSongURL(data.id);
+    
 
-    
-    audio.src=d.url;
-    
-    audio.play();
-    setloading(false);
+  let song=JSON.parse(localStorage.getItem('current'));
+  song.url=d.url;
+  localStorage.setItem('current',JSON.stringify(song));
+
+  audio.src=d.url;
+  audio.play();
+  setloading(false);
+
+  if(index>=songs.length-1){
+
+    let d= await GetSongs();
+    songs=d.data;
+    index=-1;
+  }
     
 
 }
@@ -630,14 +644,16 @@ function togglePlay(){
 }
 
 async function Playnext(setloading){
-    index++;
-    if(index==songs.length){
+    
+    if(index+1>=songs.length){
         setloading(false);
         return;
     }
-    await PlaySong(songs[index],setloading);
+    else{
+      index++;
+      await PlaySong(songs[index],setloading);
+    }
     
-
 }
 
 async function Playprev(setloading){
@@ -648,13 +664,27 @@ async function Playprev(setloading){
     }
     index--;
     await PlaySong(songs[index],setloading);
-
 }
+
+
+
+
+async function PlayAlbum(data,setloading){
+
+  songs=data;
+  index=-1
+  await Playnext(setloading);
+   
+}
+
+
+
 
 export{
     togglePlay,
     PlaySong,
     Playnext,
-    Playprev
+    Playprev,
+    PlayAlbum
 
 }

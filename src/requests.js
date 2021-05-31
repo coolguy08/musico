@@ -37,9 +37,15 @@ const GetDetails=async(id,type)=>{
     return res.data;
 }
 
+const GetSongs=async()=>{
+    const res=await get(url+`getsongs`);
+    return res.data;
+}
+
 export{
     GetLaunchData,
     GetSearch,
     GetSongURL,
-    GetDetails
+    GetDetails,
+    GetSongs
 }

@@ -58,6 +58,7 @@ function Player() {
         seeker.oninput=(e)=>{
             
             audio.currentTime=e.target.value;
+            setseekerpos(e.target.value);
         }
 
 
@@ -77,21 +78,26 @@ function Player() {
         function updatedata(){
           setsong(JSON.parse(localStorage.getItem('current')));
         }
-
+        
+        const onsongended=()=>{
+          Playnext(setloading)
+        }
         
         audio.addEventListener("timeupdate",onaudiotimeupdate);
         audio.addEventListener("play",updatedata);
+        audio.addEventListener("ended",onsongended);
 
        return () => {
          audio.removeEventListener("timeupdate",onaudiotimeupdate);
          audio.removeEventListener("play",updatedata);
          audio.removeEventListener("waiting",onwaiting);
          audio.removeEventListener("playing",onplaying);
+         audio.removeEventListener("ended",onsongended)
 
             
         }
 
-    }, [audio])
+    }, [])
 
     
 

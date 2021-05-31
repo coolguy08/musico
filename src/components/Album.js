@@ -6,11 +6,11 @@ import {SliderWrapper} from '../styles/Home';
 import Menubar from './Menubar';
 import useGetDetails from '../hooks/useGetDetails';
 import Loading from './Loading';
-import { PlaySong } from './controls';
+import { PlayAlbum, PlaySong } from './controls';
 
 function imageQuality(url){
   return url.replace('150x150','500x500').replace('50x50','500x500')
- }
+}
 
 function Album(props){
            
@@ -24,9 +24,9 @@ function Album(props){
       }
      
     
-      if(loading){
+    if(loading){
         return <><Loading/><Menubar/></>
-      }
+    }
 
     return (
       <>
@@ -37,7 +37,7 @@ function Album(props){
 
           <IconWrapper>
             <Icon background="#2a2d36" width="50px" height="50px" color="white" BorderRadius="50%"> <i class="fa fa-heart"></i></Icon>
-            <Icon background="green" width="50px" height="50px" color="white" BorderRadius="50%"><i class="fa fa-play"></i></Icon>
+            <Icon background="green" width="50px" height="50px" color="white" BorderRadius="50%" onClick={()=>PlayAlbum(data.list,setissongloading)}><i class="fa fa-play"></i></Icon>
           </IconWrapper>
 
           <Text color="white" family="Poppins" size="1.2em" padding="10px 0 0 20px">{data.title}</Text>
@@ -55,15 +55,17 @@ function Album(props){
           </ListWrapper>
            
            
-           {/*you might like Section*/}
-         {/* <Section>
+         {/*you might like Section*/}
+         {/*
+          <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">You Might Like</Text>
             <SliderWrapper>
                 <Flexbox>
                     <Cards data={data.new_trending} width="150px" height="150px"/>
                 </Flexbox>
             </SliderWrapper>
-         </Section> */}
+         </Section> 
+         */}
 
 
 

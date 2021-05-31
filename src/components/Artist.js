@@ -9,8 +9,6 @@ import Loading from './Loading';
 import Menubar from './Menubar';
 import { Text } from './Styles';
 function Artist(props) {
-
-    console.log(props);
     const [issongloading, setissongloading] = useState(false)
 
 
