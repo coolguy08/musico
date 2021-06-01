@@ -6,7 +6,7 @@ import {SliderWrapper} from '../styles/Home';
 import Menubar from './Menubar';
 import useGetDetails from '../hooks/useGetDetails';
 import Loading from './Loading';
-import { PlayAlbum, PlaySong } from './controls';
+import { PlayAlbum, PlaySong } from '../utils/controls';
 
 function imageQuality(url){
   return url.replace('150x150','500x500').replace('50x50','500x500')

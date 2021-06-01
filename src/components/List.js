@@ -32,8 +32,8 @@ function ListItem({data})
              
             <Image src={data.image} height="50px" width="50px"/>
             <ItemWrapper>
-            <Text color={data.id==JSON.parse(localStorage.getItem('current')).id?"green":"white"} family="Poppins" size="0.8em" width="180px">{data.title}</Text>
-            <Text color={data.id==JSON.parse(localStorage.getItem('current')).id?"green":"gray"} family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
+            <Text color={JSON.parse(localStorage.getItem('current')) && data.id==JSON.parse(localStorage.getItem('current')).id?"green":"white"} family="Poppins" size="0.8em" width="180px">{data.title}</Text>
+            <Text color={JSON.parse(localStorage.getItem('current')) && data.id==JSON.parse(localStorage.getItem('current')).id?"green":"gray"} family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
             </ItemWrapper>
         </NewFlexbox>
         

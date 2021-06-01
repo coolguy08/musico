@@ -5,7 +5,7 @@ import useSearch from '../hooks/useSearch';
 import { Text } from './Styles';
 import List from './List';
 import Loading from './Loading';
-import { PlaySong } from './controls';
+import { PlaySong } from '../utils/controls';
 import { useHistory } from 'react-router-dom';
 
 function getid(perma_url){

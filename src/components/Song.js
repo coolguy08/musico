@@ -1,24 +1,29 @@
 import React,{useEffect, useState}from 'react'
 
 import styled from 'styled-components';
-
 import Cards from './Cards';
 import {SliderWrapper} from '../styles/Home';
 import Menubar from './Menubar';
 import useGetDetails from '../hooks/useGetDetails';
 import Loading from './Loading';
 import List from './List';
-import { PlaySong } from './controls';
+import { PlaySong } from '../utils/controls';
+import { useHistory } from 'react-router';
 
 function imageQuality(url){
   return url.replace('150x150','500x500').replace('50x50','500x500')
  }
 
+ function getid(perma_url){
+  return perma_url.split('/').pop();
+}
+
 function Song(props) {
 
   const [issongloading, setissongloading] = useState(false)
-      const {loading,data}=useGetDetails(props.id,props.type);
-
+  const {loading,data}=useGetDetails(props.id,props.type);
+  const history=useHistory();
+  console.log(data);
       async function onListItemPress(data){
        
         await PlaySong(data,setissongloading);
@@ -73,7 +78,7 @@ function Song(props) {
                   if(index>4){
                     return <></>;
                   }
-                   return <ArtistMap key={index}>
+                   return <ArtistMap key={index} onClick={()=>history.push(`/artist/${getid(artist.perma_url)}`)}>
                         <Image src={artist.image}
                         height="50px" width="50px" borderradius="50px"
                         />
@@ -185,7 +190,7 @@ font-size:${props=>props.size};
 
 `
 
-const ArtistMap=styled.div`
+const ArtistMap=styled.a`
 padding-left:20px;
 display:flex;
 padding-bottom:3px;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
-import { togglePlay } from './controls';
+import { Playnext, togglePlay } from '../utils/controls';
 import {Text} from './Styles';
 
 
@@ -20,9 +20,10 @@ function Menubar({miniplayerloading}){
     const [tab, settab] = useState(1);
     
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')));
+    const [loading, setloading] = useState(false);
 
     const pathname=window.location.pathname;
-
+    const audio=document.getElementById('player')
     useEffect(() => {
         
 
@@ -34,9 +35,16 @@ function Menubar({miniplayerloading}){
             default:settab(getactivetab());
         }
         
+        const onsongended=()=>{
+            Playnext(setloading)
+          }
+        audio.addEventListener("ended",onsongended);
         
         return () => {
+            audio.removeEventListener("ended",onsongended); 
         }
+
+
 
     }, [])
 
@@ -44,12 +52,12 @@ function Menubar({miniplayerloading}){
     useEffect(() => {
        
           setsong(JSON.parse(localStorage.getItem('current')));
-       
-        
+          
         return () => {
-            
+        
         }
-    }, [miniplayerloading])
+
+    }, [miniplayerloading,loading])
 
    
     const history=useHistory();
@@ -60,7 +68,7 @@ function Menubar({miniplayerloading}){
     return (
         <Wrapper>
 
-        {song  && <NowPlaying song={song} history={history} loading={miniplayerloading}/>}
+        {song  && <NowPlaying song={song} history={history} loading={miniplayerloading || loading}/>}
         
         <MenuWrapper>
             <a onClick={()=>history.push('/home')}>

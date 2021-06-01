@@ -552,7 +552,10 @@ function initialize(){
 audio.onpause=()=>{
     initialize();
     // songimg.style="animation-play-state:paused"
-    song_status.className='fa fa-play';
+    if(song_status){
+      song_status.className='fa fa-play';
+    }
+    
 }
 
 audio.ontimeupdate=()=>{
@@ -618,7 +621,6 @@ async function PlaySong(data,setloading){
   let song=JSON.parse(localStorage.getItem('current'));
   song.url=d.url;
   localStorage.setItem('current',JSON.stringify(song));
-
   audio.src=d.url;
   audio.play();
   setloading(false);

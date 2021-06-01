@@ -1,31 +1,60 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { Playnext, Playprev, togglePlay } from './controls';
+import { Playnext, Playprev, togglePlay } from '../utils/controls';
 import { Text } from './Styles';
+import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 
 function Player() {
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')))
     const [loading, setloading] = useState(false);
+    const [like, setlike] = useState(false);
     
     const [seekerpos, setseekerpos] = useState(localStorage.getItem('currentTime') || 0);
     const audio=document.getElementById('player');
 
     
+    async function onlikecliked(){
+          if(like){
+            await removeFromPlaylist(song.id);
+          }
+          else{
+             addToPlaylist(song);
+          }
+          setlike(!like);
+    } 
+
+
+    useEffect(() => {
+      
+      async function get(){
+        const r=await checkInPlaylist(song.id);
+        if(r){
+          setlike(true);
+        }
+        else{
+          setlike(false);
+        }
+      }
+      get();
+      return () => {
+        
+      }
+    }, [loading]);
 
      function checkbuffer(){
 
 
 
-      let slowInternetTimeout = null;
+     let slowInternetTimeout = null;
 
-    const  onwaiting=()=>{
+     const  onwaiting=()=>{
 
       slowInternetTimeout = setTimeout(() => {
         setloading(true);
         });
      }
 
-  const onplaying=()=>{
+      const onplaying=()=>{
     if(slowInternetTimeout != null){
       clearTimeout(slowInternetTimeout);
       slowInternetTimeout = null;
@@ -36,13 +65,14 @@ function Player() {
       
  
 
-  }
+      }
          
           audio.addEventListener('waiting',onwaiting);
 
           audio.addEventListener('playing', onplaying);
 
      }
+
 
     useEffect(() => {
         
@@ -125,7 +155,7 @@ function Player() {
 
             
             <ToolBar>
-                <Icon color="white" size="1.8em"><i class="fa fa-heart"></i></Icon>
+                <Icon color={like?"red":"white"} size="1.8em" onClick={onlikecliked}><i class="fa fa-heart"></i></Icon>
                 <Icon color="white" size="1.8em" onClick={()=>Playprev(setloading)}><i class="fa fa-chevron-circle-left"></i></Icon>
                 {
                   loading?<div className="loader" style={{margin:"5px"}}></div>:

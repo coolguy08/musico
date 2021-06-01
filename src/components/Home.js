@@ -5,6 +5,7 @@ import Menubar from './Menubar';
 import useGetLaunchData from '../hooks/useGetLaunchData';
 import Loading from './Loading';
 
+import '../utils/db';
 
 function Home() {
    

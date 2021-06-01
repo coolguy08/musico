@@ -3,7 +3,7 @@ import styled  from 'styled-components';
 import useGetDetails from '../hooks/useGetDetails';
 import { SliderWrapper } from '../styles/Home';
 import Cards from './Cards';
-import { PlaySong } from './controls';
+import { PlaySong } from '../utils/controls';
 import List from './List';
 import Loading from './Loading';
 import Menubar from './Menubar';
