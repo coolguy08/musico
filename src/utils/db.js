@@ -133,7 +133,7 @@ const checkInPlaylist=async(id)=>{
 }
 
 
-module.exports={
+export{
     removeFromPlaylist,
     addToPlaylist,
     checkInPlaylist,
