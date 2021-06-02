@@ -1,7 +1,7 @@
 import React,{useState,useEffect}from 'react'
 import { useHistory } from 'react-router';
 import {Wrapper,Text,Image, ImageWrapper, Button} from '../styles/Welcome';
-import {GoogleLogin} from 'react-google-login';
+import {GoogleLogin,GoogleLogout} from 'react-google-login';
 
 
 const artists=[
@@ -25,7 +25,7 @@ const greets=[
     }
 ]
 
-const clientId="331238037755-41bm0tj0h5s0gja4b7e5i74lr71nurch.apps.googleusercontent.com";
+const clientId="331238037755-amsulf02n7qjo2p69j11icpcg3ahcn04.apps.googleusercontent.com";
 
 function Welcome() {
 
@@ -46,22 +46,13 @@ function Welcome() {
     }, [index])
 
 
-    const onsuccess=(res)=>{
-        console.log(res);
-    }
-    
-    const onFailure=(res)=>{
-        console.log(res);
-    }
-
-
-    // const {signIn}=useGoogleLogin({
-    //     onsuccess,
-    //     onFailure,
-    //     clientId,
-    //     isSignedIn:true,
-    //     accessType:"offline"
-    // })
+    const responseGoogle = (response) => {
+        if(response && response.accessToken){
+            sessionStorage.setItem('user',JSON.stringify(response.profileObj));
+            history.push('/home')
+        }
+        console.log(response);
+      }
 
     return (
         <Wrapper>
@@ -73,7 +64,7 @@ function Welcome() {
            </ImageWrapper>
            
            <Text color="white" family="Poppins" size="1.2em" bold="600">{greets[index].greet}</Text>
-           <Text color="gray" family="Poppins" size="1.0em" padding="0 20px 20% 20px">{greets[index].msg}</Text>
+           <Text color="gray" family="Poppins" size="1.0em" padding="0 20px 50px 20px">{greets[index].msg}</Text>
 
               
            
@@ -85,19 +76,24 @@ function Welcome() {
                <Text color="white" family="Poppins" size="1.5" padding="10px">Log In with Email</Text>
            </Button> */}
 
-           <GoogleLogin
-           
-           clientId="331238037755-41bm0tj0h5s0gja4b7e5i74lr71nurch.apps.googleusercontent.com"
-           buttonText="Login"
-           onsuccess={onsuccess}
-           onFailure={onFailure}
-        //    cookiePolicy={"single_host_origin"}
-           isSignedIn={true}
+<GoogleLogin
+    clientId={clientId}
+    buttonText="Login"
+    onSuccess={responseGoogle}
+    onFailure={responseGoogle}
+    cookiePolicy={'single_host_origin'}
+    isSignedIn={true}
+   
+    
 
+  />
+
+           {/* <GoogleLogout
+           text="Logout"
+           clientId={clientId}
+           onLogoutSuccess={responseGoogle}
            
-           
-           
-           />
+           /> */}
           
         </Wrapper>
     )
