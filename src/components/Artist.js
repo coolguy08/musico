@@ -47,7 +47,10 @@ if(loading){
           </Flexbox>
            
           {/*Latest realease*/}
-          <Section paddingTop="20px">
+          
+          {
+              data.latest_release.length>0 &&
+              <Section paddingTop="20px">
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Latest Releases</Text>
             <SliderWrapper>
                 <Flexbox>
@@ -55,6 +58,8 @@ if(loading){
                 </Flexbox>
             </SliderWrapper>
          </Section>
+          }
+          
 
          <ListWrapper>
          <List data={data.topSongs} handleClick={onListItemPress} title="Top Songs"/>
@@ -63,14 +68,18 @@ if(loading){
             
          
          {/*Dedicated artist pplaylist*/}
-         <Section >
+         {
+            data.dedicated_artist_playlist.length>0 && 
+            <Section >
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Just {data.name}</Text>
             <SliderWrapper>
                 <Flexbox>
                     <Cards data={data.dedicated_artist_playlist} width="150px" height="150px"/>
                 </Flexbox>
             </SliderWrapper>
-         </Section>
+           </Section>
+         }
+         
 
           {/*Featured In*/}
           <Section>

@@ -1,7 +1,7 @@
 import React,{useState,useEffect}from 'react'
 import { useHistory } from 'react-router';
 import {Wrapper,Text,Image, ImageWrapper, Button} from '../styles/Welcome';
-
+import {GoogleLogin} from 'react-google-login';
 
 
 const artists=[
@@ -25,11 +25,13 @@ const greets=[
     }
 ]
 
+const clientId="331238037755-41bm0tj0h5s0gja4b7e5i74lr71nurch.apps.googleusercontent.com";
+
 function Welcome() {
 
     const [index, setindex] = useState(0)
 
-const history=useHistory();
+   const history=useHistory();
 
     const changeindex=()=>
     {
@@ -42,6 +44,24 @@ const history=useHistory();
             clearTimeout(crousel);
         }
     }, [index])
+
+
+    const onsuccess=(res)=>{
+        console.log(res);
+    }
+    
+    const onFailure=(res)=>{
+        console.log(res);
+    }
+
+
+    // const {signIn}=useGoogleLogin({
+    //     onsuccess,
+    //     onFailure,
+    //     clientId,
+    //     isSignedIn:true,
+    //     accessType:"offline"
+    // })
 
     return (
         <Wrapper>
@@ -57,9 +77,27 @@ const history=useHistory();
 
               
            
-           <Button background="green" onClick={()=>history.push('/home')}>
+           {/* <Button background="green" onClick={()=>history.push('/home')}>
                <Text color="white" family="Poppins" size="1.5" padding="10px">Log In with Email</Text>
-           </Button>
+           </Button> */}
+
+           {/* <Button background="green" onClick={signIn}>
+               <Text color="white" family="Poppins" size="1.5" padding="10px">Log In with Email</Text>
+           </Button> */}
+
+           <GoogleLogin
+           
+           clientId="331238037755-41bm0tj0h5s0gja4b7e5i74lr71nurch.apps.googleusercontent.com"
+           buttonText="Login"
+           onsuccess={onsuccess}
+           onFailure={onFailure}
+        //    cookiePolicy={"single_host_origin"}
+           isSignedIn={true}
+
+           
+           
+           
+           />
           
         </Wrapper>
     )

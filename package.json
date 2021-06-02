@@ -6,6 +6,7 @@
     "axios": "^0.21.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-google-login": "^5.2.2",
     "react-lazy-load-image-component": "^1.5.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -14,7 +15,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build"
-    
   },
   "eslintConfig": {
     "extends": [
