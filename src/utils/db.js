@@ -1,4 +1,4 @@
-window.indexedDB=window.indexedDB || window.mozIndexedDB || window.WebKitIndexedDB || window.msIndexedDB;
+//window.indexedDB=window.indexedDB || window.mozIndexedDB || window.WebKitIndexedDB || window.msIndexedDB;
 
 let request=window.indexedDB.open("Playlist",2);
 
@@ -24,6 +24,7 @@ request.onsuccess=function(e){
         console.log(err);
     }
 }
+
 request.onerror=function(e){
 
     console.log("error",e);
