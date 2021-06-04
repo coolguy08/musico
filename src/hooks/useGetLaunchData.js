@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import {GetLaunchData} from '../requests';
 
+
+let cache=[];
+
 function useGetLaunchData() {
     const [loading, setloading] = useState(true);
     const [data, setdata] = useState([]);
-
-    
 
     useEffect(() => {
         
@@ -14,6 +15,7 @@ function useGetLaunchData() {
             
             if(d.data!=undefined){
                 sessionStorage.setItem('launchdata',JSON.stringify(d.data));
+                cache=d.data;
                 setdata(d.data);
                 setloading(false);
             }
@@ -24,11 +26,13 @@ function useGetLaunchData() {
             
         }
 
-        if(sessionStorage.getItem('launchdata'))
+        const d=JSON.parse(sessionStorage.getItem('launchdata'));
+   //console.log(d);
+        if(d!=undefined && d.greeting)
         {
             
-            const launchdata=JSON.parse(sessionStorage.getItem('launchdata'));
-            setdata(launchdata);
+            
+            setdata(d);
             setloading(false);
             
         }
@@ -36,6 +40,8 @@ function useGetLaunchData() {
         {
             getdata();
         }
+
+        
 
         return () => {
             

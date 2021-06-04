@@ -151,6 +151,11 @@ async function PlayAlbum(data,setloading){
    
 }
 
+function updateAlbum(data,idx){
+  songs=data;
+index=idx;//current song that is pressed
+}
+
 
 
 
@@ -159,6 +164,7 @@ export{
     PlaySong,
     Playnext,
     Playprev,
-    PlayAlbum
+    PlayAlbum,
+    updateAlbum
 
 }

@@ -7,7 +7,8 @@ import { PlaySong } from '../utils/controls';
 import List from './List';
 import Loading from './Loading';
 import Menubar from './Menubar';
-import { Text } from './Styles';
+import { Text } from '../styles/Styles';
+import { imageQuality } from '../utils/common';
 function Artist(props) {
     const [issongloading, setissongloading] = useState(false)
 
@@ -17,9 +18,7 @@ function Artist(props) {
         await PlaySong(data,setissongloading);
         
       }
-      function imageQuality(url){
-        return url.replace('150x150','500x500').replace('50x50','500x500')
-       }
+      
 const {loading,data}=useGetDetails(props.match.params.id,'artist')
 
 if(loading){

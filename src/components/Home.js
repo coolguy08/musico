@@ -5,15 +5,11 @@ import Menubar from './Menubar';
 import useGetLaunchData from '../hooks/useGetLaunchData';
 import Loading from './Loading';
 
-
-
 import '../utils/db';
 
 function Home() {
    
     const {loading,data}=useGetLaunchData();
-
-
 
     if(loading || !data){
         return <><Loading/><Menubar/></>
@@ -114,5 +110,5 @@ function Home() {
      )
 }
 
-export default React.memo(Home)
+export default Home;
 

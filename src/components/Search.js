@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import Menubar from './Menubar'
 import styled from 'styled-components';
 import useSearch from '../hooks/useSearch';
-import { Text } from './Styles';
+import { Text } from '../styles/Styles';
 import List from './List';
 import Loading from './Loading';
 import { PlaySong } from '../utils/controls';

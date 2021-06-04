@@ -66,15 +66,7 @@ function Welcome() {
            <Text color="white" family="Poppins" size="1.2em" bold="600">{greets[index].greet}</Text>
            <Text color="gray" family="Poppins" size="1.0em" padding="0 20px 50px 20px">{greets[index].msg}</Text>
 
-              
-           
-           {/* <Button background="green" onClick={()=>history.push('/home')}>
-               <Text color="white" family="Poppins" size="1.5" padding="10px">Log In with Email</Text>
-           </Button> */}
-
-           {/* <Button background="green" onClick={signIn}>
-               <Text color="white" family="Poppins" size="1.5" padding="10px">Log In with Email</Text>
-           </Button> */}
+          
 
 <GoogleLogin
     clientId={clientId}

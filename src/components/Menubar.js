@@ -2,7 +2,7 @@ import React, { useEffect, useState} from 'react'
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Playnext, togglePlay } from '../utils/controls';
-import {Text} from './Styles';
+import {Text} from '../styles/Styles';
 
 
 

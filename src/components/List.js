@@ -1,20 +1,26 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import { Flexbox } from '../styles/Home';
-import {Text} from './Styles';
-
-
-
+import {Text} from '../styles/Styles';
+import { updateAlbum } from '../utils/controls';
 
 function List(props){
+
+    const handleClick=(val,data,index)=>{
+         props.handleClick(val);
+
+         if(val.type==="song"){  //checking if the clicked item is song or not to update playlist
+            updateAlbum(data,index)
+         }
+    }
     
     return (
         <Wrapper>
             
             {   props.title?<Text color="white" family="Poppins" size="1.15em" padding="0 0 10px 0" bold={600}>{props.title}</Text>:''}
             {
-                props.data.map((val)=>{
-                    return <a onClick={()=>props.handleClick(val)} key={val.id}><ListItem key={val.id} data={val} /></a>
+                props.data.map((val,index)=>{
+                    return <a onClick={()=>handleClick(val,props.data,index)} key={val.id}><ListItem key={val.id} data={val} /></a>
                 })
             }
         </Wrapper>
@@ -25,7 +31,7 @@ function List(props){
 function ListItem({data})
 {
  
-    const [cursongid, setcursongid] = useState();
+    
 
     return (
         <NewFlexbox>

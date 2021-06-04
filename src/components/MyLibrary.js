@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Menubar from './Menubar'
 import styled from 'styled-components';
 import List from './List';
-import { Text } from './Styles';
+import { Text } from '../styles/Styles';
 import { getPlaylist } from '../utils/db';
 import { PlaySong } from '../utils/controls';
 

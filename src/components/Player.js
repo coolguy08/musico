@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { Playnext, Playprev, togglePlay } from '../utils/controls';
-import { Text } from './Styles';
+import { Text } from '../styles/Styles';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 
 function Player() {

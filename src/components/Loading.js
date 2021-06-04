@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Text } from "./Styles";
+import { Text } from "../styles/Styles";
 import "../styles/loader.css";
 function Loading() {
   return (

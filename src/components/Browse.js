@@ -1,4 +1,4 @@
-import React,{useEffect}from 'react'
+import React from 'react'
 import {Text, Wrapper,SliderWrapper,Section,Flexbox} from '../styles/Home';
 import Cards from './Cards';
 import Menubar from './Menubar';

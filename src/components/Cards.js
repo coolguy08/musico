@@ -3,19 +3,18 @@ import { useHistory } from 'react-router';
 import styled,{keyframes}from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import { getid } from '../utils/common';
 
-function getid(perma_url){
-    return perma_url.split('/').pop();
-}
+
 
  
 function Cards(props){ 
        // this is a default card
-       if(props.cardtype=="circle")
+       if(props.cardtype==="circle")
        {
            return <CircularCard data={props.data} {...props}/>
        }
-       else if(props.cardtype=="rectangle")
+       else if(props.cardtype==="rectangle")
        {
            return <RectangleCard data={props.data} {...props}/>
        }
@@ -32,8 +31,8 @@ function SimpleCard({data,width,height})
     return (
         <>
         {
-            data.map((val)=>{
-                return <Wrapper key={getid(val.perma_url)} onClick={()=>history.push(`/view/${val.type}/${getid(val.perma_url)}`)} width={width} height={height}>
+            data.map((val,index)=>{
+                return <Wrapper key={val.id+index} onClick={()=>history.push(`/view/${val.type}/${getid(val.perma_url)}`)} width={width} height={height}>
                 
                 <LazyLoadImage
     
@@ -44,6 +43,8 @@ function SimpleCard({data,width,height})
                     style={{borderRadius:'10px'}}
 
                 />
+
+                {/* <Image src={val.image} BorderRadius="10px" width="100px" height="100px"/> */}
                 
                 
                 <Text color="white" padding="5px" family="Poppins">{val.title}</Text>
@@ -60,8 +61,8 @@ function CircularCard(props)
     return (
         <>
         {
-            props.data.map((val)=>{
-                return <Wrapper key={val.id}>
+            props.data.map((val,index)=>{
+                return <Wrapper key={val.id+index}>
      
                 <LazyLoadImage
                 
@@ -89,8 +90,8 @@ function RectangleCard(props)
     return (
         <>
         {
-            props.data.map((val)=>{
-                return <Wrapper width="150px" key={val.id}>
+            props.data.map((val,index)=>{
+                return <Wrapper width="150px" key={val.id+index}>
                 <LazyLoadImage
                 
                 effect="blur"
