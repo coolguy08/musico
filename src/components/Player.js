@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Playnext, Playprev, togglePlay } from '../utils/controls';
 import { Text } from '../styles/Styles';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
+import Back from './Back';
 
 function Player() {
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')))
@@ -133,8 +134,15 @@ function Player() {
 
     return (
         <Wrapper>
-          
-            <Text color="white" family="Poppins" size="1.2em" padding="20px 0 0 20px" bold={600}>Now Playing</Text>
+            {/*  */}
+            <Back/>
+            <HeaderWrapper>
+
+            
+            <Text color="white" family="Poppins" size="1.2em"  bold={600}>Now Playing</Text>
+            
+            </HeaderWrapper>
+            
            <ImageWrapper>
                    
                    <Image src={song.image} width="280px" height="280px"/>
@@ -179,6 +187,13 @@ const Wrapper=styled.div`
 
 width:100vw;
 `
+
+const HeaderWrapper=styled.div`
+display:flex;
+justify-content:space-around;
+padding:20px;
+
+`
 const Footer=styled.div`
 position:fixed;
 bottom:0px;
@@ -194,7 +209,7 @@ display:flex;
 width:100%;
 justify-content:center;
 align-items:center;
-padding-top:3vh;
+padding-top:6vh;
 height:100%;
 
 `

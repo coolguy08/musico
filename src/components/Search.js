@@ -59,9 +59,10 @@ function Search() {
             <ListWrapper>
             
             {data.topquery.data.length>0 && <List data={data.topquery.data} title="Top Results" handleClick={onListItemPress}/>}
+            {data.playlists.data.length>0 && <List data={data.playlists.data} title="PlayLists" handleClick={onListItemPress}/>}
+            
             {data.songs.data.length>0 && <List data={data.songs.data} title="Songs" handleClick={onListItemPress}/>}
             {data.albums.data.length>0 && <List data={data.albums.data} title="Albums" handleClick={onListItemPress}/>}
-            {data.playlists.data.length>0 && <List data={data.playlists.data} title="PlayLists" handleClick={onListItemPress}/>}
             
             
 

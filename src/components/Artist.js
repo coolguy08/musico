@@ -9,6 +9,7 @@ import Loading from './Loading';
 import Menubar from './Menubar';
 import { Text } from '../styles/Styles';
 import { imageQuality } from '../utils/common';
+import Back from './Back';
 function Artist(props) {
     const [issongloading, setissongloading] = useState(false)
 
@@ -29,7 +30,7 @@ if(loading){
     return (
         <>
         <Wrapper>
-            
+            <Back/>
             
             <Banner img={imageQuality(data.image)}>
                 <ArtistName>

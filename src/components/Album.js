@@ -8,13 +8,14 @@ import useGetDetails from '../hooks/useGetDetails';
 import Loading from './Loading';
 import { PlayAlbum, PlaySong } from '../utils/controls';
 import { imageQuality } from '../utils/common';
+import Back from './Back';
 
 
 
 function Album(props){
            
       const [issongloading, setissongloading] = useState(false)
-      const {loading,data}=useGetDetails(props.id,props.type);
+      const {loading,data}=useGetDetails(props.id,props.type,50);
 
       async function onListItemPress(data){
        
@@ -30,6 +31,7 @@ function Album(props){
     return (
       <>
         <Wrapper>
+          <Back/>
           <ImageWrapper padding="30px 0 0 0">
              <Image src={imageQuality(data.image)}/>
           </ImageWrapper>

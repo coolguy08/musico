@@ -9,6 +9,7 @@ import Loading from './Loading';
 import List from './List';
 import { PlaySong } from '../utils/controls';
 import { useHistory } from 'react-router';
+import Back from './Back';
 
 function imageQuality(url){
   return url.replace('150x150','500x500').replace('50x50','500x500')
@@ -37,6 +38,7 @@ function Song(props) {
     return (
       <>
         <Wrapper>
+          <Back/>
           <ImageWrapper padding="30px 0 30px 0">
              <Image src={imageQuality(data.songs[0].image)} width="200px" height="200px" borderradius="10px"/>
           </ImageWrapper>
