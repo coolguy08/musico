@@ -36,6 +36,7 @@ request.onerror=function(e){
 
 
 const addToPlaylist=(song)=>{
+    song.type="song";
     db=request.result;
     tx=db.transaction("Playlist","readwrite");
     store=tx.objectStore("Playlist");
