@@ -137,6 +137,7 @@ const Image=styled.img`
 width:200px;
 height:200px;
 border-radius:10px;
+box-shadow:0px 0px 50px  black;
 `
 
 const IconWrapper=styled.div`

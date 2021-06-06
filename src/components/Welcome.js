@@ -4,6 +4,7 @@ import {Wrapper,Text,Image, ImageWrapper, Button} from '../styles/Welcome';
 import {GoogleLogin,GoogleLogout} from 'react-google-login';
 
 
+
 const artists=[
     "http://sagracdnems03.cdnsrv.jio.com/c.saavncdn.com/artists/Arijit_Singh_500x500.jpg",
     "https://sagraecdnems03.cdnsrv.jio.com/c.saavncdn.com/artists/Jubin_Nautiyal_002_20180507091834_500x500.jpg",
@@ -25,7 +26,7 @@ const greets=[
     }
 ]
 
-const clientId="331238037755-amsulf02n7qjo2p69j11icpcg3ahcn04.apps.googleusercontent.com";
+const clientId="1097284669182-eee65ec791mdlue6d2npfhhpai794g10.apps.googleusercontent.com";
 
 function Welcome() {
 
@@ -74,7 +75,7 @@ function Welcome() {
     onSuccess={responseGoogle}
     onFailure={responseGoogle}
     cookiePolicy={'single_host_origin'}
-    isSignedIn={true}
+    // isSignedIn={true}
    
     
 

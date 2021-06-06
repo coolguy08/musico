@@ -6,17 +6,19 @@ import useGetLaunchData from '../hooks/useGetLaunchData';
 import Loading from './Loading';
 
 import '../utils/db';
+import Header from './Header';
 
 function Home() {
    
     const {loading,data}=useGetLaunchData();
 
     if(loading || !data){
-        return <><Loading/><Menubar/></>
+        return <><Header title="Musico"/><Loading/><Menubar/></>
     }
 
     return (
         <>
+        <Header title="Musico"/>
         <Wrapper>
          <Text color="white" family="Poppins" size="1.0em" padding="20px">{data.greeting}</Text>
          

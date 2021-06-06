@@ -150,6 +150,7 @@ background:#2a2d36;
 border-top:0.25px solid gray;
 display:flex;
 justify-content:space-between;
+box-shadow:0px 0px 5px inset gray;
 
 `
 const Wrapper=styled.div`

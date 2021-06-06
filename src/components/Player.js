@@ -261,6 +261,7 @@ const Icon=styled.a`
 color:${props=>props.color};
 font-size:${props=>props.size};
 
+
 `
 const ToolBar=styled.div`
 display:flex;
@@ -270,6 +271,7 @@ justify-content:space-around;
 `
 const Image=styled.img`
 border-radius:30px;
+box-shadow:0px 0px 40px  gray;
 // animation:disc 8s infinite linear;
 `
 

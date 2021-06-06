@@ -13,6 +13,7 @@ width:${props=>props.width || ''};
 text-overflow: ellipsis;
 white-space: nowrap;
 overflow: hidden;
+// text-align:center;
 
 `
 

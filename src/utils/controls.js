@@ -80,7 +80,7 @@ async function PlaySong(data,setloading){
       id:data.id,
       title:data.title,
       description:data.description || data.subtitle,
-      image:data.image.replace('150x150','500x500').replace('50x50','500x500'),
+      image:data.image.replace('150x150','250x250').replace('50x50','250x250'),
       url:data.url
      }
      
@@ -115,6 +115,16 @@ function togglePlay(){
     else{
         audio.pause();
     }
+}
+
+function addtonext(data){
+  if(songs.length==0){
+    songs.push(data);
+    return;
+  }
+  songs.splice(index+1,0,data);
+  console.log("song added to next");
+
 }
 
 async function Playnext(setloading){
@@ -165,6 +175,7 @@ export{
     Playnext,
     Playprev,
     PlayAlbum,
-    updateAlbum
+    updateAlbum,
+    addtonext
 
 }
