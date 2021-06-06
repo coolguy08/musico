@@ -134,7 +134,7 @@ function Player() {
 
     return (
         <Wrapper>
-            {/*  */}
+            
             <Back/>
             <HeaderWrapper>
 

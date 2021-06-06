@@ -2,6 +2,7 @@ import React,{useState,useEffect}from 'react'
 import { useHistory } from 'react-router';
 import {Wrapper,Text,Image, ImageWrapper, Button} from '../styles/Welcome';
 import {GoogleLogin,GoogleLogout} from 'react-google-login';
+import Header from './Header';
 
 
 
@@ -56,6 +57,8 @@ function Welcome() {
       }
 
     return (
+        <>
+        
         <Wrapper>
             
            <Text color="white" family="Poppins" size="1.0em" padding="30px 0 0 0">Create Account</Text><br/>
@@ -75,7 +78,7 @@ function Welcome() {
     onSuccess={responseGoogle}
     onFailure={responseGoogle}
     cookiePolicy={'single_host_origin'}
-    // isSignedIn={true}
+    isSignedIn={true}
    
     
 
@@ -89,6 +92,7 @@ function Welcome() {
            /> */}
           
         </Wrapper>
+        </>
     )
 }
 
