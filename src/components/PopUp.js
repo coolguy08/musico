@@ -71,7 +71,7 @@ useEffect(() => {
             <br/>
             
             <ButtonWrapper>
-            <Text color="yellow" family="Poppins" size="1.2em" onClick={handlePlay} padding="5px"><Picon color="white" size="1.2em"><i class="fa fa-play"></i></Picon>Play Now</Text>
+            <Text color="yellow" family="Poppins" size="1.2em" onClick={handlePlay} padding="5px"><Picon color="yellow" size="1.2em"><i class="fa fa-play"></i></Picon>Play Now</Text>
             <Text color="white" family="Poppins" size="1.2em" onClick={addnext} padding="5px"><Picon color="white" size="1.2em"><i class="fa fa-forward"></i></Picon>Play Next</Text>
             <Text color={like?"red":"white"} family="Poppins" size="1.2em" padding="5px" onClick={onlikecliked}><Picon color={like?"red":"white"} size="1.3em"><i class="fa fa-heart"></i></Picon>{like?"Remove from Library":"Add to Library"}</Text>
               

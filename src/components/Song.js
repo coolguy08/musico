@@ -24,7 +24,7 @@ function Song(props) {
   const [issongloading, setissongloading] = useState(false)
   const {loading,data}=useGetDetails(props.id,props.type);
   const history=useHistory();
-  console.log(data);
+  
       async function onListItemPress(data){
        
         await PlaySong(data,setissongloading);

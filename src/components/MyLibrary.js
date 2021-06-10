@@ -5,10 +5,13 @@ import List from './List';
 import { Text } from '../styles/Styles';
 import { getPlaylist } from '../utils/db';
 import { PlaySong } from '../utils/controls';
+import { useHistory } from 'react-router';
 
 function MyLibrary(){
     const [songs, setsongs] = useState([]);
-    const [issongloading, setissongloading] = useState(false)
+    const [issongloading, setissongloading] = useState(false);
+
+    const history=useHistory();
       async function onListItemPress(data){
        
         await PlaySong(data,setissongloading);
@@ -36,6 +39,8 @@ function MyLibrary(){
             
             <BarWrapper>
              <SearchBar type="text"  placeholder="Search"/>
+             <Icon color="white" size="1.7em" background="#2a2d36" onClick={()=>history.push('/settings')}><i class="fa fa-cog"></i></Icon>
+             
             </BarWrapper>
             
            
@@ -84,4 +89,17 @@ outline:none;
 border:none;
 font-family:Poppins;
 font-size:1.2em;
+`
+const Icon=styled.button`
+background:${props=>props.background};
+width:${props=>props.width};
+height:${props=>props.height};
+outline:none;
+border:none;
+color:${props=>props.color};
+font-size:${props=>props.size};
+
+
+
+
 `

@@ -29,7 +29,7 @@ const GetSearch=async(query)=>{
 }
 
 const GetSongURL=async(id)=>{
-    const res=await get(url+'getsongurl?id='+id);
+    const res=await get(url+`getsongurl?id=${id}&bitrate=${sessionStorage.quality}`);
     return res.data;
 }
 
