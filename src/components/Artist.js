@@ -8,8 +8,9 @@ import List from './List';
 import Loading from './Loading';
 import Menubar from './Menubar';
 import { Text } from '../styles/Styles';
-import { imageQuality } from '../utils/common';
+import { imageQuality, share } from '../utils/common';
 import Back from './Back';
+import Error404 from './Error404';
 function Artist(props) {
     const [issongloading, setissongloading] = useState(false)
 
@@ -25,6 +26,10 @@ const {loading,data}=useGetDetails(props.match.params.id,'artist')
 if(loading){
     return <><Loading/><Menubar/></>
 }
+
+if(loading===false && data.length===0){
+    return <Error404/>
+  }
 
 
     return (
@@ -42,7 +47,7 @@ if(loading){
             {/* section for download and share and plays */}
           <Flexbox>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-arrow-down"></i></Icon>
-          <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-share-alt"></i></Icon>
+          <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%" onClick={()=>share({title:"Musico",url:window.location.href,text:data.name+data.subtitle})}><i class="fa fa-share-alt"></i></Icon>
           <Text color="gray" family="Poppins" size="0.9em">{data.subtitle}</Text>
           </Flexbox>
            

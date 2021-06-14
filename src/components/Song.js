@@ -10,6 +10,8 @@ import List from './List';
 import { PlaySong } from '../utils/controls';
 import { useHistory } from 'react-router';
 import Back from './Back';
+import { share } from '../utils/common';
+import Error404 from './Error404';
 
 function imageQuality(url){
   return url.replace('150x150','500x500').replace('50x50','500x500')
@@ -35,6 +37,10 @@ function Song(props) {
     return <><Loading/><Menubar/></>
   }
 
+  if(loading===false && data.length===0){
+    return <Error404/>
+  }
+
     return (
       <>
         <Wrapper>
@@ -54,7 +60,7 @@ function Song(props) {
           {/* section for download and share and plays */}
           <Flexbox>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-arrow-down"></i></Icon>
-          <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-share-alt"></i></Icon>
+          <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%" onClick={()=>share({title:"Musico",url:window.location.href,text:"Listen To "+data.songs[0].title})}><i class="fa fa-share-alt"></i></Icon>
           <Text color="gray" family="Poppins" size="0.8em">{parseInt(data.songs[0].play_count).toLocaleString('en-US')} Plays</Text>
           </Flexbox>
           

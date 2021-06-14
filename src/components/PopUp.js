@@ -1,7 +1,7 @@
 import React,{useEffect, useState}from 'react'
 import styled, { keyframes } from 'styled-components';
 import { Text } from '../styles/Styles';
-import { imageQuality } from '../utils/common';
+import { imageQuality, share } from '../utils/common';
 import { addtonext } from '../utils/controls';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
@@ -71,18 +71,12 @@ useEffect(() => {
             <br/>
             
             <ButtonWrapper>
-            <Text color="yellow" family="Poppins" size="1.2em" onClick={handlePlay} padding="5px"><Picon color="yellow" size="1.2em"><i class="fa fa-play"></i></Picon>Play Now</Text>
-            <Text color="white" family="Poppins" size="1.2em" onClick={addnext} padding="5px"><Picon color="white" size="1.2em"><i class="fa fa-forward"></i></Picon>Play Next</Text>
-            <Text color={like?"red":"white"} family="Poppins" size="1.2em" padding="5px" onClick={onlikecliked}><Picon color={like?"red":"white"} size="1.3em"><i class="fa fa-heart"></i></Picon>{like?"Remove from Library":"Add to Library"}</Text>
-              
+            <Text color="yellow" family="Poppins" size="1.0em" onClick={handlePlay} padding="3px"><Picon color="yellow" size="1.2em"><i class="fa fa-play"></i></Picon>Play Now</Text>
+            <Text color="white" family="Poppins" size="1.0em" onClick={addnext} padding="3px"><Picon color="white" size="1.2em"><i class="fa fa-forward"></i></Picon>Play Next</Text>
+            <Text color={like?"red":"white"} family="Poppins" size="1.0em" padding="3px" onClick={onlikecliked}><Picon color={like?"red":"white"} size="1.3em"><i class="fa fa-heart"></i></Picon>{like?"Remove":"Add"}</Text>
+            <Text color="white" family="Poppins" size="1.0em" onClick={()=>share({title:props.data.title,url:window.location.href,text:props.data.title})} padding="3px"><Picon color="white" size="1.2em"><i class="fa fa-share-alt"></i></Picon>Share</Text>
+            
             </ButtonWrapper>
-            
-            
-
-           
-            
-
-            
             
             <Icon tobottom={true} BorderRadius="15px" width="100%" height="50px" size="1.2em" background="#2a2d36" color="white" onClick={()=>props.setopen(false)}>Cancel</Icon>
             

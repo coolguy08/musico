@@ -7,10 +7,24 @@ function getid(perma_url){
     return perma_url.split('/').pop();
 }
 
+async function share(data){
+    try {
+
+       
+          navigator.share(data)
+           
+    
+        
+    } catch (error) {
+
+        alert(error.message);
+        console.log(error.message);
+    }
+}
 
 
 
 export{
     imageQuality,
-    getid
+    getid,share
 }

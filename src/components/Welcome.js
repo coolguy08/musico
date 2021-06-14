@@ -72,24 +72,27 @@ function Welcome() {
 
           
 
-<GoogleLogin
-    clientId={clientId}
-    buttonText="Login"
-    onSuccess={responseGoogle}
-    onFailure={responseGoogle}
-    cookiePolicy={'single_host_origin'}
-    isSignedIn={true}
-   
-    
+            <GoogleLogin
+                clientId={clientId}
+                buttonText="Login"
+                onSuccess={responseGoogle}
+                onFailure={responseGoogle}
+                cookiePolicy={'single_host_origin'}
+                isSignedIn={true}
+            
+            />
 
-  />
+            <br/>
+            <Text color="white" family="Poppins" size="1.2em" bold="600" onClick={()=>{history.push('/home')}}>Skip</Text>
 
-           {/* <GoogleLogout
+           {
+           /* <GoogleLogout
            text="Logout"
            clientId={clientId}
            onLogoutSuccess={responseGoogle}
            
-           /> */}
+           /> */
+           }
           
         </Wrapper>
         </>

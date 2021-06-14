@@ -120,9 +120,11 @@ function togglePlay(){
 function addtonext(data){
   if(songs.length==0){
     songs.push(data);
+    alert('song added');
     return;
   }
   songs.splice(index+1,0,data);
+  alert('song added');
   console.log("song added to next");
 
 }

@@ -7,8 +7,9 @@ import Menubar from './Menubar';
 import useGetDetails from '../hooks/useGetDetails';
 import Loading from './Loading';
 import { PlayAlbum, PlaySong } from '../utils/controls';
-import { imageQuality } from '../utils/common';
+import { imageQuality, share } from '../utils/common';
 import Back from './Back';
+import Error404 from './Error404';
 
 
 
@@ -26,6 +27,10 @@ function Album(props){
     
     if(loading){
         return <><Loading/><Menubar/></>
+    }
+
+    if(loading===false && data.length===0){
+      return <Error404/>
     }
 
     return (
@@ -47,7 +52,7 @@ function Album(props){
           {/* section for download and share and plays */}
           <Flexbox>
           <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-arrow-down"></i></Icon>
-          <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%"><i class="fa fa-share-alt"></i></Icon>
+          <Icon background="#2a2d36" size="13px" width="25px" height="25px" color="white" BorderRadius="50%" onClick={()=>share({title:"Musico",url:window.location.href,text:data.title})}><i class="fa fa-share-alt"></i></Icon>
           <Text color="gray" family="Poppins" size="0.8em">{parseInt(data.list[0].play_count).toLocaleString('en-US')} Plays</Text>
           </Flexbox>
           

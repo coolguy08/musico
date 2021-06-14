@@ -47,8 +47,8 @@ function MyLibrary(){
             <ListWrapper>
                 {songs.length > 0?
                 <List data={songs} handleClick={onListItemPress} title="Songs"></List>:
-                <Text color="white" size="1.2em" family="Poppins" padding="50px 0 0 0">No Songs Added</Text>}
-                
+                <center><Text color="white" size="1.2em" family="Poppins" padding="50px 0 0 0">No Songs Added</Text></center>
+                }
             </ListWrapper>
             
             

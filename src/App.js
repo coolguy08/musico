@@ -10,6 +10,7 @@ import Artist from "./components/Artist";
 import Player from "./components/Player";
 import { useEffect } from "react";
 import Settings from "./components/Settings";
+import Error404 from "./components/Error404";
 
 function App(){
 
@@ -39,7 +40,7 @@ function App(){
           <Route exact path="/player" component={Player}/>
           <Route exact path="/artist/:id" component={Artist}/>
           <Route exact path="/settings" component={Settings}/>
-         
+          <Route  component={Error404}/>
           
           
         </Switch>

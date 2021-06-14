@@ -4,6 +4,7 @@ import { Playnext, Playprev, togglePlay } from '../utils/controls';
 import { Text } from '../styles/Styles';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
+import { share } from '../utils/common';
 
 function Player() {
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')))
@@ -171,7 +172,7 @@ function Player() {
 
                 }
                 <Icon color="white" size="1.8em" onClick={()=>Playnext(setloading)}><i class="fa fa-chevron-circle-right"></i></Icon>
-                <Icon color="white" size="1.8em"><i class="fa fa-arrow-down"></i></Icon>
+                <Icon color="white" size="1.8em" onClick={()=>share({title:song.title,url:window.location.href,text:song.title})}><i class="fa fa-share-alt"></i></Icon>
 
             </ToolBar>
             </Footer>
