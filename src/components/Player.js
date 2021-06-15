@@ -157,8 +157,8 @@ function Player() {
             <ProgressBarWrapper>
                 <ProgressBar id="seeker" type="range" value={seekerpos} max="0"/>
                 <Timer>
-                <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 0" id="start">1:00</Text>
-                <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 20px" id="end">5:00</Text>
+                <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 0" id="start">00:00</Text>
+                <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 20px" id="end">NaN</Text>
                 </Timer>
             </ProgressBarWrapper>
 
