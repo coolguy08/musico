@@ -15,7 +15,7 @@ const artists=[
 const greets=[
     {
         greet:"Let's Rock",
-        msg:"Create an account or log in to keep using JioSaavn!"
+        msg:"Create an account or log in to keep using Musico!"
     },
     {
         greet:"Unlimited Listening",

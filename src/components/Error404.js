@@ -12,9 +12,9 @@ function Error404() {
                   
             
             <ImageWrapper>
-            
+            <center>
                 <Image src="https://s.saavncdn.com/404/_i/404.hero.png" width="100%"/>
-                <center>
+               
                 <Text color="white" family="Poppins" size="2em">
                   Page Not Found
                 </Text>
@@ -24,10 +24,6 @@ function Error404() {
                 </center>
             </ImageWrapper>
  
-
-
-            
-            
         </Wrapper>
     )
 }
@@ -36,14 +32,20 @@ export default Error404
 
 const Wrapper=styled.div`
 width:100vw;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+
 
 `
 
 const ImageWrapper=styled.div`
 width:100vw;
-margin-top:50%
+
 `
 
 const Image=styled.img`
-
+max-width:500px;
+max-height:600px
 `
