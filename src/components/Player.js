@@ -108,6 +108,7 @@ function Player() {
         }
 
         function updatedata(){
+          console.log(JSON.parse(localStorage.getItem('current')));
           setsong(JSON.parse(localStorage.getItem('current')));
         }
         
@@ -172,7 +173,7 @@ function Player() {
 
                 }
                 <Icon color="white" size="1.8em" onClick={()=>Playnext(setloading)}><i class="fa fa-chevron-circle-right"></i></Icon>
-                <Icon color="white" size="1.8em" onClick={()=>share({title:song.title,url:window.location.href,text:song.title})}><i class="fa fa-share-alt"></i></Icon>
+                <Icon color="white" size="1.8em" onClick={()=>share({title:song.title,url:song.share_url,text:song.title})}><i class="fa fa-share-alt"></i></Icon>
 
             </ToolBar>
             </Footer>
@@ -199,6 +200,7 @@ const Footer=styled.div`
 position:fixed;
 bottom:0px;
 width:100vw;
+padding-bottom:10px;
 
 `
 const Timer=styled.div`
@@ -221,7 +223,7 @@ padding:10px;
 const ProgressBar=styled.input`
 
 width:100%;
-height:8px;
+height:5px;
 fill:white;
 appearance:none;
 background-color: white;
@@ -232,10 +234,10 @@ border-radius:10px;
 &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
-    background: green;
+    background: cyan;
     cursor:pointer;
   };
 

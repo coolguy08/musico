@@ -16,8 +16,7 @@ export default Header
 
 const Image=styled.img`
 border-radius:50%;
-box-shadow:0px 0px 40px  gray;
-// animation:disc 8s infinite linear;
+box-shadow:0px 0px 10px  gray;
 `
 
 const Wrapper=styled.div`

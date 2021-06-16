@@ -8,7 +8,7 @@ function getid(perma_url){
 }
 
 async function share(data){
-    try {
+        try {
 
        
           navigator.share(data)

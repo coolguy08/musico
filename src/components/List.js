@@ -32,12 +32,12 @@ function List(props){
 function ListItem({data,handleClick,index})
 {
      const [open, setopen] = useState(false);
-    
+   
 
     return (
-        <NewFlexbox>
+        <ItemFlex>
             <a onClick={()=>handleClick(data,index)}>
-            <NewFlexbox>
+            <NewFlexbox wrap={true}>
              
              <Image src={data.image} height="50px" width="50px"/>
              <ItemWrapper>
@@ -51,7 +51,7 @@ function ListItem({data,handleClick,index})
          {data.type=="song"?<Icon ><i class="fa fa-ellipsis-v" onClick={()=>setopen(true)}></i></Icon>:''}
          {open?<PopUp setopen={setopen} data={data} index={index} handleClick={handleClick}/>:""}
          
-        </NewFlexbox>
+        </ItemFlex>
         
         
     )
@@ -73,9 +73,18 @@ color:white;
 outline:none;
 border:none;
 font-size:20px;
-margin-left:10px;
+margin-right:10px;
 
 `
+
+const ItemFlex=styled(Flexbox)`
+padding-left:0px;
+justify-content:space-between;
+
+`
+
+
+
 
 const ItemWrapper=styled.div`
 padding-top:10px;
@@ -89,4 +98,5 @@ margin-right:10px
 
 const NewFlexbox=styled(Flexbox)`
 padding-left:0px;
+
 `
