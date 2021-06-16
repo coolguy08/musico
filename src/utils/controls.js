@@ -90,11 +90,13 @@ async function PlaySong(data,setloading){
   
 
   const d=await GetSongURL(data.id);
+  audio.src=d.url;
+  audio.play();
   let song=JSON.parse(localStorage.getItem('current'));
   song.url=d.url;
   localStorage.setItem('current',JSON.stringify(song));
-  audio.src=d.url;
-  audio.play();
+  
+  
   setloading(false);
 
   if(index>=songs.length-1){
