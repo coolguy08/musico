@@ -76,15 +76,14 @@ function MediaSessionApi(){
 
 async function PlaySong(data,setloading){
      
-  console.log(data);
+  
     setloading(true);
      const cur_song={
       id:data.id,
       title:data.title,
       description:data.description || data.subtitle,
       image:data.image.replace('150x150','250x250').replace('50x50','250x250'),
-      url:data.url,
-      share_url:window.location.origin+`/view/song/${getid(data.perma_url)}`
+      share_url:window.location.origin+`/view/song/${getid(data.perma_url || data.url)}`
      }
      
 

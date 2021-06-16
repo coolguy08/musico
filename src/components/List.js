@@ -37,7 +37,7 @@ function ListItem({data,handleClick,index})
     return (
         <ItemFlex>
             <a onClick={()=>handleClick(data,index)}>
-            <NewFlexbox wrap={true}>
+            <NewFlexbox>
              
              <Image src={data.image} height="50px" width="50px"/>
              <ItemWrapper>
@@ -73,7 +73,7 @@ color:white;
 outline:none;
 border:none;
 font-size:20px;
-margin-right:10px;
+margin-right:15px;
 
 `
 
