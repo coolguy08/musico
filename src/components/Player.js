@@ -5,16 +5,49 @@ import { Text } from '../styles/Styles';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
 import { share } from '../utils/common';
+import { GetLyrics } from '../requests';
+
+
+const parser=new DOMParser();
 
 function Player() {
+  
     const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')))
     const [loading, setloading] = useState(false);
     const [like, setlike] = useState(false);
+    const [lyricsloading, setlyricsloading] = useState(true);
+    const [lyrics, setlyrics] = useState('')
     
     const [seekerpos, setseekerpos] = useState(localStorage.getItem('currentTime') || 0);
     const audio=document.getElementById('player');
 
     
+    useEffect(() => {  // geet lyrics of song 
+      async function  get(){
+        setlyricsloading(true);
+        const res=await GetLyrics(song.id);
+        if(res.data.lyrics){
+          setlyrics(res.data.lyrics);
+          document.body.scrollTop = 0;
+          
+        // This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
+        window.scrollTo(0,0);
+        }
+        else{
+          setlyrics('No Lyrics Found')
+        }
+        setlyricsloading(false);
+
+        
+      }
+      
+      get();
+      return () => {
+        
+      }
+    }, [song])
+
+
     async function onlikecliked(){
           if(like){
             await removeFromPlaylist(song.id);
@@ -28,6 +61,9 @@ function Player() {
 
     useEffect(() => {
       
+     
+      
+
       async function get(){
         const r=await checkInPlaylist(song.id);
         if(r){
@@ -37,7 +73,14 @@ function Player() {
           setlike(false);
         }
       }
+      const newdata=JSON.parse(localStorage.getItem('current'));
+      if(newdata.id!==song.id){  //update only when song changes
+        setsong(newdata);
+        
+      }
       get();
+
+      
       return () => {
         
       }
@@ -107,22 +150,17 @@ function Player() {
     
         }
 
-        function updatedata(){
-          console.log(JSON.parse(localStorage.getItem('current')));
-          setsong(JSON.parse(localStorage.getItem('current')));
-        }
+       
         
         const onsongended=()=>{
           Playnext(setloading)
         }
         
         audio.addEventListener("timeupdate",onaudiotimeupdate);
-        audio.addEventListener("play",updatedata);
         audio.addEventListener("ended",onsongended);
 
        return () => {
          audio.removeEventListener("timeupdate",onaudiotimeupdate);
-         audio.removeEventListener("play",updatedata);
          audio.removeEventListener("waiting",onwaiting);
          audio.removeEventListener("playing",onplaying);
          audio.removeEventListener("ended",onsongended)
@@ -149,7 +187,27 @@ function Player() {
                    
                    <Image src={song.image} width="280px" height="280px"/>
                    
+                   
            </ImageWrapper>
+           
+            
+            
+           <LyricsWrapper>
+             {
+               lyricsloading?
+               <center><Text color="white" family="Poppins" size="0.9em" >Loading... lyrics</Text></center>
+               :
+               lyrics.split('<br>').map((line)=>{
+                       return <LyricsText color="white" family="Poppins" size="0.9em">{line}</LyricsText>
+               })
+               
+               
+             }
+
+            
+            
+            </LyricsWrapper>
+            
             
             <Footer>
             <Text color="white" family="Poppins" size="1.2em" padding="0 0 0 20px">{song.title}</Text>
@@ -164,12 +222,14 @@ function Player() {
             </ProgressBarWrapper>
 
             
+
+            
             <ToolBar>
                 <Icon color={like?"red":"white"} size="1.8em" onClick={onlikecliked}><i class="fa fa-heart"></i></Icon>
                 <Icon color="white" size="1.8em" onClick={()=>Playprev(setloading)}><i class="fa fa-chevron-circle-left"></i></Icon>
                 {
                   loading?<div className="loader" style={{margin:"5px"}}></div>:
-                  <Icon color="white" size="2em" onClick={togglePlay}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></Icon>
+                  <Icon color="white" size="2.3em" onClick={togglePlay}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></Icon>
 
                 }
                 <Icon color="white" size="1.8em" onClick={()=>Playnext(setloading)}><i class="fa fa-chevron-circle-right"></i></Icon>
@@ -190,6 +250,16 @@ const Wrapper=styled.div`
 width:100vw;
 `
 
+const LyricsWrapper=styled.div`
+padding-top:20px;
+padding-left:15px;
+padding-right:15px;
+padding-bottom:200px;
+text-align:center;
+font-style:italic;
+
+`
+
 const HeaderWrapper=styled.div`
 display:flex;
 justify-content:space-around;
@@ -201,6 +271,7 @@ position:fixed;
 bottom:0px;
 width:100vw;
 padding-bottom:10px;
+background:#2a2d36;
 
 `
 const Timer=styled.div`
@@ -212,7 +283,7 @@ display:flex;
 width:100%;
 justify-content:center;
 align-items:center;
-padding-top:6vh;
+padding-top:3vh;
 height:100%;
 
 `
@@ -260,6 +331,17 @@ border-radius:10px;
 
 
 `
+
+const LyricsText=styled.div`
+
+padding:5px;
+color:${props=>props.color || 'red'};
+font-family:${props=>props.family || 'mono'};
+font-size:${props=>props.size || "10px"};
+font-weight:${props=>props.bold};
+
+`
+
 const Icon=styled.a`
 color:${props=>props.color};
 font-size:${props=>props.size};
@@ -270,6 +352,7 @@ const ToolBar=styled.div`
 display:flex;
 padding:20px;
 justify-content:space-around;
+align-items:center;
 
 `
 const Image=styled.img`

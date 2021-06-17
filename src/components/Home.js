@@ -7,8 +7,10 @@ import Loading from './Loading';
 
 import '../utils/db';
 import Header from './Header';
+import { useState } from 'react';
 
 function Home() {
+    const [issongloading, setissongloading] = useState(false)
    
     const {loading,data}=useGetLaunchData();
 
@@ -52,7 +54,7 @@ function Home() {
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Search By Artists</Text>
             <SliderWrapper>
                 <Flexbox >
-                   <Cards data={data.artist_recos} cardtype="circle" />
+                   <Cards data={data.artist_recos} cardtype="circle" setloading={setissongloading}/>
 
                 </Flexbox>
             </SliderWrapper>
@@ -64,7 +66,7 @@ function Home() {
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Radio Stations</Text>
             <SliderWrapper>
                 <Flexbox  width={`${(data.radio.length/2)*110}px`} wrap="wrap">
-                    <Cards data={data.radio} cardtype="circle"/>
+                    <Cards data={data.radio} cardtype="circle" setloading={setissongloading}/>
                      
                 </Flexbox>
             </SliderWrapper>
@@ -82,6 +84,20 @@ function Home() {
 
         
 
+         
+
+         {/*charts*/}
+         <Section>
+            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Charts</Text>
+            <SliderWrapper >
+                <Flexbox >
+                    <Cards data={data.charts} cardtype="rectangle" datatype="charts"/>
+                </Flexbox>
+           
+            </SliderWrapper>
+            
+         </Section>
+
          {/*discovers*/}
          <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Explore</Text>
@@ -93,21 +109,9 @@ function Home() {
             </SliderWrapper>
             
          </Section>
-
-         {/*charts*/}
-         <Section>
-            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Charts</Text>
-            <SliderWrapper >
-                <Flexbox >
-                    <Cards data={data.charts} cardtype="rectangle"/>
-                </Flexbox>
-           
-            </SliderWrapper>
-            
-         </Section>
             
       </Wrapper>
-      <Menubar/>
+      <Menubar miniplayerloading={issongloading}/>
       </>
      )
 }

@@ -4,6 +4,7 @@ import styled,{keyframes}from 'styled-components';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { getid } from '../utils/common';
+import { PlayRadio } from '../utils/controls';
 
 
 
@@ -56,13 +57,13 @@ function SimpleCard({data,width,height})
     )
 }
 
-function CircularCard(props)
+function CircularCard({data,setloading})
 {
     return (
         <>
         {
-            props.data.map((val,index)=>{
-                return <Wrapper key={val.id+index}>
+            data.map((val,index)=>{
+                return <Wrapper key={val.id+index} onClick={()=>PlayRadio(val.title,val.more_info.featured_station_type,setloading)}>
      
                 <LazyLoadImage
                 
@@ -87,11 +88,13 @@ function CircularCard(props)
 
 function RectangleCard(props)
 {
+    const history=useHistory();
+    
     return (
         <>
         {
             props.data.map((val,index)=>{
-                return <Wrapper width="150px" key={val.id+index}>
+                return <Wrapper width="150px" key={val.id+index} onClick={props.datatype==='charts'?()=>history.push(`/view/playlist/${getid(val.perma_url)}`):()=>{}}>
                 <LazyLoadImage
                 
                 effect="blur"

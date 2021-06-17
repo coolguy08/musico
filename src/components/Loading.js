@@ -9,9 +9,8 @@ function Loading() {
         <Skeleton2/>
         <Skeleton2/>
         <Skeleton2/>
-        
-       
-        
+        <Skeleton2/>
+  
 
     </Wrapper>
   )

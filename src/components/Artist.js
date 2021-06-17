@@ -66,9 +66,9 @@ if(loading===false && data.length===0){
           }
           
 
-         <ListWrapper>
-         <List data={data.topSongs} handleClick={onListItemPress} title="Top Songs"/>
-         </ListWrapper>
+        { data.topSongs.length>0 && <ListWrapper>
+            <List data={data.topSongs} handleClick={onListItemPress} title="Top Songs"/>
+         </ListWrapper>}
           
             
          
@@ -87,34 +87,36 @@ if(loading===false && data.length===0){
          
 
           {/*Featured In*/}
-          <Section>
-            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Featured In</Text>
-            <SliderWrapper>
-                <Flexbox>
-                    <Cards data={data.featured_artist_playlist} width="150px" height="150px"/>
-                </Flexbox>
-            </SliderWrapper>
-         </Section>
+        {   data.featured_artist_playlist.length>0 && 
+            <Section>
+                <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Featured In</Text>
+                <SliderWrapper>
+                    <Flexbox>
+                        <Cards data={data.featured_artist_playlist} width="150px" height="150px"/>
+                    </Flexbox>
+                </SliderWrapper>
+        </Section>
+        }
 
           {/*Top Albums of current singer*/}
-          <Section>
+          {data.topAlbums.length>0 && <Section>
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Top Albums</Text>
             <SliderWrapper>
                 <Flexbox>
                     <Cards data={data.topAlbums} width="150px" height="150px"/>
                 </Flexbox>
             </SliderWrapper>
-         </Section>
+         </Section>}
 
          {/*Singles*/}
-         <Section>
-            <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Singles</Text>
-            <SliderWrapper>
-                <Flexbox>
-                    <Cards data={data.singles} width="150px" height="150px"/>
-                </Flexbox>
-            </SliderWrapper>
-         </Section>
+        {data.singles.length>0 && <Section>
+        <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 0 20px">Singles</Text>
+        <SliderWrapper>
+            <Flexbox>
+                <Cards data={data.singles} width="150px" height="150px"/>
+            </Flexbox>
+        </SliderWrapper>
+        </Section>}
          
          {/* About Section */}
          {/* <Section>

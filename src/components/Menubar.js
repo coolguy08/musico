@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Playnext, togglePlay } from '../utils/controls';
 import {Text} from '../styles/Styles';
+import Loader from './Loader';
 
 
 
@@ -12,7 +13,7 @@ function setactivetab(tab){
 }
 
 function getactivetab(){
-return sessionStorage.getItem('tab');
+  return sessionStorage.getItem('tab');
 }
 
 function Menubar({miniplayerloading}){
@@ -51,12 +52,34 @@ function Menubar({miniplayerloading}){
 
     useEffect(() => {
        
-          setsong(JSON.parse(localStorage.getItem('current')));
+        function onplaying(){
+            
+            const newdata=JSON.parse(localStorage.getItem('current'));
+            if(newdata.id!==song.id){  //update only when song changes
+                setsong(newdata);
+                
+            }
+        }
+          
+        audio.addEventListener("playing",onplaying);
           
         return () => {
-        
+            audio.removeEventListener("playing",onplaying);
         }
 
+    }, [])
+
+
+    useEffect(() => {
+        const newdata=JSON.parse(localStorage.getItem('current'));
+            if(newdata.id!==song.id){  //update only when song changes
+                setsong(newdata);
+                
+            }
+          
+        return () => {
+            
+        }
     }, [miniplayerloading,loading])
 
    
@@ -115,6 +138,7 @@ function MenuItem({children,active})
 
 function NowPlaying({song,history,loading}){
     const audio=document.getElementById('player');
+   
     
       return <SmallPlayer>
             <Image src={song.image} width="50px" height="50px" onClick={()=>history.push('/player')}/>
@@ -124,7 +148,7 @@ function NowPlaying({song,history,loading}){
             </TextWrapper>
              {
                  loading?
-                 <div className="loader" style={{margin:"15px"}}></div>:
+                 <Loader width="20px" height="20px"/>:
                  <PlayerIcon onClick={()=>togglePlay()}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></PlayerIcon>
 
              }

@@ -76,6 +76,7 @@ function MediaSessionApi(){
 
 async function PlaySong(data,setloading){
      
+    audio.pause();
   
     setloading(true);
      const cur_song={
@@ -93,19 +94,39 @@ async function PlaySong(data,setloading){
 
   const d=await GetSongURL(data.id);
   audio.src=d.url;
-  audio.play();
+  
   let song=JSON.parse(localStorage.getItem('current'));
   song.url=d.url;
+  audio.play();
   localStorage.setItem('current',JSON.stringify(song));
-  
-  
+
+
   setloading(false);
+ 
 
-  if(index>=songs.length-1){
 
-    let d= await GetSongs();
-    songs=d.data;
-    index=-1;
+  if(index>=songs.length-1){ // add songs in queue if no songs are remaining
+    
+    let d;
+    if(data.more_info.artistMap){
+      let random_artists=data.more_info.artistMap.primary_artists;//get artists array
+      let random_index=Math.floor(Math.random()*random_artists.length);
+      let artist_id=getid(random_artists[random_index].perma_url);
+       d=await GetSongs('','',artist_id,'artist');
+    }
+    else
+    {
+
+      d=await GetSongs(data.more_info.primary_artists,'artist','','radio');
+    }
+    
+    
+
+    if(d.data[0]){
+      songs=d.data;
+      index=-1;
+    }
+    
   }
     
 
@@ -167,9 +188,23 @@ async function PlayAlbum(data,setloading){
    
 }
 
-function updateAlbum(data,idx){
+async function PlayRadio(radio_name,radiotype,setloading){
+  
+  
+  setloading(true);
+  const d=await GetSongs(radio_name,radiotype,'','radio');
+  if(d.data[0]!=null){
+    songs=d.data;
+    index=-1;
+  }
+  
+  await Playnext(setloading);
+
+}
+
+function updateAlbum(data,idx){ //this function set index of thesong that is pressed
   songs=data;
-index=idx;//current song that is pressed
+  index=idx;//current song that is pressed
 }
 
 
@@ -182,6 +217,7 @@ export{
     Playprev,
     PlayAlbum,
     updateAlbum,
-    addtonext
+    addtonext,
+    PlayRadio
 
 }
