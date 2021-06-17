@@ -6,9 +6,9 @@ import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
 import { share } from '../utils/common';
 import { GetLyrics } from '../requests';
+import Error404 from './Error404';
 
 
-const parser=new DOMParser();
 
 function Player() {
   
@@ -20,13 +20,15 @@ function Player() {
     
     const [seekerpos, setseekerpos] = useState(localStorage.getItem('currentTime') || 0);
     const audio=document.getElementById('player');
+    
+    
 
     
     useEffect(() => {  // geet lyrics of song 
       async function  get(){
         setlyricsloading(true);
-        const res=await GetLyrics(song.id);
-        if(res.data.lyrics){
+        const res=await GetLyrics(song?song.id:'');
+        if(res.data && res.data.lyrics){
           setlyrics(res.data.lyrics);
           document.body.scrollTop = 0;
           
@@ -65,7 +67,7 @@ function Player() {
       
 
       async function get(){
-        const r=await checkInPlaylist(song.id);
+        const r=await checkInPlaylist(song?song.id:'');
         if(r){
           setlike(true);
         }
@@ -74,7 +76,7 @@ function Player() {
         }
       }
       const newdata=JSON.parse(localStorage.getItem('current'));
-      if(newdata.id!==song.id){  //update only when song changes
+      if(newdata && newdata.id!==song.id ){  //update only when song changes
         setsong(newdata);
         
       }
@@ -122,7 +124,15 @@ function Player() {
     useEffect(() => {
         
         const seeker=document.getElementById('seeker');
-        seeker.max=audio.duration;
+        if(seeker){
+          seeker.max=audio.duration;
+          seeker.oninput=(e)=>{
+            
+            audio.currentTime=e.target.value;
+            setseekerpos(e.target.value);
+          }
+        }
+        
         if(audio.paused){
           audio.currentTime=seekerpos;
         }
@@ -130,11 +140,7 @@ function Player() {
 
         checkbuffer();
 
-        seeker.oninput=(e)=>{
-            
-            audio.currentTime=e.target.value;
-            setseekerpos(e.target.value);
-        }
+        
 
 
 
@@ -170,8 +176,9 @@ function Player() {
 
     }, [])
 
-    
-
+    if(song==undefined){
+      return <Error404/>
+    }
     return (
         <Wrapper>
             

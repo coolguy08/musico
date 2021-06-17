@@ -55,7 +55,7 @@ function Menubar({miniplayerloading}){
         function onplaying(){
             
             const newdata=JSON.parse(localStorage.getItem('current'));
-            if(newdata.id!==song.id){  //update only when song changes
+            if(!song || newdata.id!==song.id){  //update only when song changes
                 setsong(newdata);
                 
             }
@@ -72,9 +72,8 @@ function Menubar({miniplayerloading}){
 
     useEffect(() => {
         const newdata=JSON.parse(localStorage.getItem('current'));
-            if(newdata.id!==song.id){  //update only when song changes
+            if(!song || newdata.id!==song.id){  //update only when song changes
                 setsong(newdata);
-                
             }
           
         return () => {
