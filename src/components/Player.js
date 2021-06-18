@@ -66,7 +66,7 @@ function Player() {
      
       
 
-      async function get(){
+      async function get(){ //checking for a like
         const r=await checkInPlaylist(song?song.id:'');
         if(r){
           setlike(true);
@@ -75,6 +75,7 @@ function Player() {
           setlike(false);
         }
       }
+
       const newdata=JSON.parse(localStorage.getItem('current'));
       if(newdata && newdata.id!==song.id ){  //update only when song changes
         setsong(newdata);
@@ -120,17 +121,19 @@ function Player() {
 
      }
 
+     const onseekerchange=(e)=>{
+      audio.currentTime=e.target.value;
+      setseekerpos(e.target.value);
+     }
+
 
     useEffect(() => {
         
         const seeker=document.getElementById('seeker');
+
         if(seeker){
           seeker.max=audio.duration;
-          seeker.oninput=(e)=>{
-            
-            audio.currentTime=e.target.value;
-            setseekerpos(e.target.value);
-          }
+          
         }
         
         if(audio.paused){
@@ -221,7 +224,7 @@ function Player() {
             
             <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 20px">{song.description}</Text>
             <ProgressBarWrapper>
-                <ProgressBar id="seeker" type="range" value={seekerpos} max="0"/>
+                <ProgressBar id="seeker" type="range" value={seekerpos} max="0" onChange={onseekerchange}/>
                 <Timer>
                 <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 0" id="start">00:00</Text>
                 <Text color="gray" family="Poppins" size="0.9em" padding="0 0 0 20px" id="end">NaN</Text>
