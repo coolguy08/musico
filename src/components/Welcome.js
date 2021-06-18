@@ -74,7 +74,7 @@ function Welcome() {
 
             <GoogleLogin
                 clientId={clientId}
-                buttonText="Login"
+                buttonText="Login With Google"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy={'single_host_origin'}
@@ -83,7 +83,7 @@ function Welcome() {
             />
 
             <br/>
-            <Text color="white" family="Poppins" size="1.2em" bold="600" onClick={()=>{history.push('/home')}}>Skip</Text>
+            <Text color="white" style={{textDecoration:'underline'}}family="Poppins" size="1.2em" bold="600" onClick={()=>{history.push('/home')}}>Skip</Text>
 
            {
            /* <GoogleLogout

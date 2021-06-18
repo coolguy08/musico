@@ -23,11 +23,12 @@ function Artist(props) {
       
 const {loading,data}=useGetDetails(props.match.params.id,'artist')
 
+
 if(loading){
     return <><Loading/><Menubar/></>
 }
 
-if(loading===false && data.length===0){
+if(loading===false && !data.list){
     return <Error404/>
   }
 

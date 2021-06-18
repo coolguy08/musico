@@ -6,15 +6,18 @@ import { Text } from '../styles/Styles';
 import { getPlaylist } from '../utils/db';
 import { PlaySong } from '../utils/controls';
 import { useHistory } from 'react-router';
+import Loading from './Loading';
 
 function MyLibrary(){
     const [songs, setsongs] = useState([]);
     const [issongloading, setissongloading] = useState(false);
+    const [loading, setloading] = useState(true);
 
     const history=useHistory();
       async function onListItemPress(data){
        
         await PlaySong(data,setissongloading);
+        
         
       }
      
@@ -23,6 +26,7 @@ function MyLibrary(){
         async function get(){
             const d=await getPlaylist();
             setsongs(d);
+            setloading(false);
         }
 
         get();
@@ -31,6 +35,10 @@ function MyLibrary(){
             
         }
     }, [])
+
+    if(loading){
+        return <Loading/>
+    }
 
 
     return (

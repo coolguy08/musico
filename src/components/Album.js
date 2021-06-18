@@ -29,7 +29,7 @@ function Album(props){
         return <><Loading/><Menubar/></>
     }
 
-    if(loading===false && data.length===0){
+    if(loading===false && !data.list){
       return <Error404/>
     }
 
