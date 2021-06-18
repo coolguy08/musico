@@ -37,7 +37,8 @@ function Song(props) {
     return <><Loading/><Menubar/></>
   }
 
-  if(loading===false && !data.list){
+  if(loading===false && !data.songs){
+    console.log(data);
     return <Error404/>
   }
 

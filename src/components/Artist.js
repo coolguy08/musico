@@ -28,7 +28,7 @@ if(loading){
     return <><Loading/><Menubar/></>
 }
 
-if(loading===false && !data.list){
+if(loading===false && !data.artistId){
     return <Error404/>
   }
 

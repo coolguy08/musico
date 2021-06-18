@@ -92,6 +92,7 @@ function Welcome() {
            onLogoutSuccess={responseGoogle}
            
            /> */
+           
            }
           
         </Wrapper>
