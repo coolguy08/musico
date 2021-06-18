@@ -1,8 +1,8 @@
 import React,{useState,useEffect}from 'react'
 import { useHistory } from 'react-router';
-import {Wrapper,Text,Image, ImageWrapper, Button} from '../styles/Welcome';
-import {GoogleLogin,GoogleLogout} from 'react-google-login';
-import Header from './Header';
+import {Wrapper,Text,Image, ImageWrapper} from '../styles/Welcome';
+import {GoogleLogin} from 'react-google-login';
+
 
 
 

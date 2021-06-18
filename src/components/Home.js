@@ -1,13 +1,12 @@
 import React from 'react'
 import {Text, Wrapper,SliderWrapper,Section,Flexbox} from '../styles/Home';
-import Cards from './Cards';
 import Menubar from './Menubar';
 import useGetLaunchData from '../hooks/useGetLaunchData';
 import Loading from './Loading';
-
 import '../utils/db';
 import Header from './Header';
 import { useState } from 'react';
+import Cards from './Cards';
 
 function Home() {
     const [issongloading, setissongloading] = useState(false)
