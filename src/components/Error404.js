@@ -18,7 +18,7 @@ function Error404() {
                 <Text color="white" family="Poppins" size="2em">
                   Page Not Found
                 </Text>
-                <Text color="white" family="Poppins" size="1.5em" onClick={()=>history.goBack()}>
+                <Text style={{textDecoration:'underline'}}color="white" family="Poppins" size="1.5em" onClick={()=>history.goBack()}>
                 Go Back
             </Text>
                 </center>
