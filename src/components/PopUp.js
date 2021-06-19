@@ -17,7 +17,14 @@ function PopUp(props){
       await removeFromPlaylist(props.data.id);
     }
     else{
-       addToPlaylist(props.data);
+      const song={
+        id:props.data.id,
+        title:props.data.title,
+        description:props.data.description || props.data.subtitle,
+        image:props.data.image.replace('150x150','250x250').replace('50x50','250x250'),
+        share_url:window.location.origin+`/view/song/${getid(props.data.perma_url || props.data.url)}`
+      }
+       addToPlaylist(song);
     }
     setlike(!like);
 } 

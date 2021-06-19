@@ -84,7 +84,7 @@ async function PlaySong(data,setloading){
       title:data.title,
       description:data.description || data.subtitle,
       image:data.image.replace('150x150','250x250').replace('50x50','250x250'),
-      share_url:window.location.origin+`/view/song/${getid(data.perma_url || data.url)}`
+      share_url:data.share_url || window.location.origin+`/view/song/${getid(data.perma_url || data.url)}`
      }
      
 
@@ -108,6 +108,9 @@ async function PlaySong(data,setloading){
   if(index>=songs.length-1){ // add songs in queue if no songs are remaining
     
     let d;
+    if(!data.more_info){
+      return;
+    }
     if(data.more_info.artistMap){
       let random_artists=data.more_info.artistMap.primary_artists;//get artists array
       let random_index=Math.floor(Math.random()*random_artists.length);
