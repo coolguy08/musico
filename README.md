@@ -19,6 +19,7 @@ An Simple Music App Developed using MERN stack and [JiosaavnApi](https://github.
 - Search your favourite Song
 - Add your songs to Library
 - Add To play Next
+- Enjoy Different Radio Stations
 - Lyrics
 - Choose Song Quality
 
