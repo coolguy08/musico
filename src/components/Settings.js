@@ -3,7 +3,7 @@ import { GoogleLogout } from 'react-google-login';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
-import {Wrapper,Text,Image, ImageWrapper, Button} from '../styles/Welcome';
+import {Wrapper,Text,Image, ImageWrapper} from '../styles/Welcome';
 import Back from './Back';
 
 import Header from './Header';
@@ -53,7 +53,7 @@ function Settings() {
  return (
         <>
         <Header title="Musico"/>
-        <Wrapper>
+           <Wrapper>
             <Text color="white" family="Poppins" size="1.0em" padding="30px 0 0 0">Create Account</Text><br/>
            <Back/>
            <ImageWrapper padding="20px 0 30px 0px">

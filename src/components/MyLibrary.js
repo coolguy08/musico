@@ -37,19 +37,20 @@ function MyLibrary(){
     }, [])
 
     if(loading){
-        return <Loading/>
+        return <><Loading/><Menubar/></>
     }
 
 
     return (
         <>
-        <Wrapper>
-            
-            <BarWrapper>
+        <BarWrapper>
              <SearchBar type="text"  placeholder="Search"/>
              <Icon color="white" size="1.7em" background="#2a2d36" onClick={()=>history.push('/settings')}><i class="fa fa-cog"></i></Icon>
              
             </BarWrapper>
+        <Wrapper>
+            
+            
             
            
             <ListWrapper>
@@ -73,13 +74,16 @@ export default MyLibrary
 const Wrapper=styled.div`
 padding-left:20px;
 
+
 `
 const BarWrapper=styled.div`
-//display:flex;
-//justify-content:center;
+
+display:flex;
+justify-content:space-around;
+align-items:center;
 position:fixed;
 background:#2a2d36;
-width:100vw;
+width:100%;
 padding-top:20px;
 
 
@@ -87,10 +91,12 @@ padding-top:20px;
 const ListWrapper=styled.div`
 padding-top:60px;
 padding-bottom:150px;
+
 `
 
 const SearchBar=styled.input`
-width:80vw;
+margin-left:10px;
+width:100%;
 border-radius:10px;
 padding:7px;
 outline:none;

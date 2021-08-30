@@ -46,11 +46,12 @@ function Search() {
 
     return (
         <>
-        <Wrapper>
-            
-            <BarWrapper>
+        <BarWrapper>
              <SearchBar type="text" value={query} placeholder="Music, Artists, and Podcasts" onChange={handlechange}/>
             </BarWrapper>
+        <Wrapper>
+            
+            
             
             {loading?<Loading/>:''}
 
@@ -85,10 +86,12 @@ export default Search
 const Wrapper=styled.div`
 
 padding-left:20px;
+
 `
 const BarWrapper=styled.div`
-//display:flex;
-//justify-content:center;
+display:flex;
+justify-content:center;
+align-items:center;
 position:fixed;
 background:#2a2d36;
 width:100vw;
@@ -101,8 +104,9 @@ padding-top:55px;
 padding-bottom:150px;
 `
 const SearchBar=styled.input`
-
-width:80vw;
+margin-left:10px;
+margin-right:10px;
+width:100%;
 border-radius:10px;
 padding:7px;
 outline:none;
