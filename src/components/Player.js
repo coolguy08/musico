@@ -366,6 +366,7 @@ align-items:center;
 
 `
 const Image=styled.img`
+object-fit:cover;
 border-radius:30px;
 box-shadow:0px 0px 40px  gray;
 // animation:disc 8s infinite linear;

@@ -63,10 +63,12 @@ const removeFromPlaylist=(id)=>{
     ); 
 }
 let initialload=true;
+
 const getPlaylist=()=>{
     
     return new Promise(
         async function (resolve,reject){
+
             if(initialload){
                 await new Promise(resolve=>setTimeout(resolve,1000));
                 console.log("initial load");
@@ -91,6 +93,43 @@ const getPlaylist=()=>{
 }
 
 
+
+const search_song=async(query)=>{
+    
+    let song=query.toLowerCase(); // song to search
+    
+
+    return new Promise(
+
+     async function (resolve,reject){
+ 
+       const data=await getPlaylist();
+
+       if(song===" " || song===""){
+          resolve(data);
+       }
+       
+       let res=[];
+       for(let i=0;i<data.length;i++){
+           let obj=data[i];
+           let songname=obj.title.toLowerCase();
+           if(songname.indexOf(song)>=0){
+               res.push(obj);
+           }
+       }
+
+       resolve(res);
+
+
+
+     }
+
+
+    )
+}
+
+
+
 const checkInPlaylist=async(id)=>{
     
     return new Promise(
@@ -107,7 +146,7 @@ const checkInPlaylist=async(id)=>{
         store=tx.objectStore("Playlist");
 
         const data=store.get(id);
-        data.onsuccess=function(e) {
+        data.onsuccess=function(e){
             if(e.target.result!=undefined){
                 
                 resolve(true);
@@ -139,6 +178,7 @@ export{
     removeFromPlaylist,
     addToPlaylist,
     checkInPlaylist,
-    getPlaylist
+    getPlaylist,
+    search_song
 }
 

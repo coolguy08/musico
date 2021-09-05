@@ -3,7 +3,7 @@ import Menubar from './Menubar'
 import styled from 'styled-components';
 import List from './List';
 import { Text } from '../styles/Styles';
-import { getPlaylist } from '../utils/db';
+import { getPlaylist, search_song } from '../utils/db';
 import { PlaySong } from '../utils/controls';
 import { useHistory } from 'react-router';
 import Loading from './Loading';
@@ -40,11 +40,19 @@ function MyLibrary(){
         return <><Loading/><Menubar/></>
     }
 
+    const search=async(e)=>{
+        let query=e.target.value;
+
+        let data=await search_song(query);
+        setsongs(data);
+
+    }
+
 
     return (
         <>
         <BarWrapper>
-             <SearchBar type="text"  placeholder="Search"/>
+             <SearchBar type="text"  placeholder="Search" onChange={search}/>
              <Icon color="white" size="1.7em" background="#2a2d36" onClick={()=>history.push('/settings')}><i class="fa fa-cog"></i></Icon>
              
             </BarWrapper>
@@ -56,7 +64,7 @@ function MyLibrary(){
             <ListWrapper>
                 {songs.length > 0?
                 <List data={songs} handleClick={onListItemPress} title="Songs"></List>:
-                <center><Text color="white" size="1.2em" family="Poppins" padding="50px 0 0 0">No Songs Added</Text></center>
+                <center><Text color="white" size="1.2em" family="Poppins" padding="50px 0 0 0">No Songs Found</Text></center>
                 }
             </ListWrapper>
             
