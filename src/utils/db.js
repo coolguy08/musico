@@ -6,7 +6,7 @@ let request=window.indexedDB.open("Playlist",2);
 
 let db,tx,store,index;
 
-const loginStatus=localStorage.user?true:false;
+const loginStatus=localStorage.user!=undefined?true:false;
 const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
 
 
