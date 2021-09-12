@@ -2,6 +2,8 @@ import React,{useState,useEffect}from 'react'
 import { useHistory } from 'react-router';
 import {Wrapper,Text,Image, ImageWrapper} from '../styles/Welcome';
 import {GoogleLogin} from 'react-google-login';
+import { login } from '../requests';
+import { getUserPlayList } from '../utils/db';
 
 
 
@@ -41,6 +43,9 @@ function Welcome() {
     }
 
     useEffect(() => {
+        if(localStorage.user){
+            history.push('/home');
+        }
         const crousel=setTimeout(changeindex,3000);
         return () => {
             clearTimeout(crousel);
@@ -48,10 +53,27 @@ function Welcome() {
     }, [index])
 
 
-    const responseGoogle = (response) => {
+    const responseGoogle = async(response) => {
         if(response && response.accessToken){
-            sessionStorage.setItem('user',JSON.stringify(response.profileObj));
-            history.push('/home')
+            
+            localStorage.setItem('user',JSON.stringify(response.profileObj));
+            
+            const data={
+                    
+                    name:response.profileObj.name,
+                    guid:response.profileObj.googleId,
+                    profilepic:response.profileObj.imageUrl,
+
+
+            }
+
+            const res=await login(data);
+
+            if(res.status){
+                getUserPlayList(data);
+                history.push('/home');
+            }
+            
         }
         console.log(response);
       }

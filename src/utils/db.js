@@ -1,8 +1,13 @@
 //window.indexedDB=window.indexedDB || window.mozIndexedDB || window.WebKitIndexedDB || window.msIndexedDB;
 
+import { AddSong, fetchPlaylist, RemoveSong } from "../requests";
+
 let request=window.indexedDB.open("Playlist",2);
 
 let db,tx,store,index;
+
+const loginStatus=localStorage.user?true:false;
+const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
 
 
 request.onupgradeneeded=function(e) {
@@ -36,6 +41,10 @@ request.onerror=function(e){
 
 
 const addToPlaylist=(song)=>{
+    if(loginStatus){
+        let r=AddSong({guid:guid,song:song});
+    }
+  
     song.type="song";
     db=request.result;
     tx=db.transaction("Playlist","readwrite");
@@ -45,6 +54,10 @@ const addToPlaylist=(song)=>{
 }
 
 const removeFromPlaylist=(id)=>{
+    if(loginStatus){
+    let r=RemoveSong({guid:guid,id:id});
+    }
+
     db=request.result;
     tx=db.transaction("Playlist","readwrite");
     store=tx.objectStore("Playlist");
@@ -129,10 +142,60 @@ const search_song=async(query)=>{
 }
 
 
+const clearPlayList=async()=>{
+
+    return new Promise(
+        
+        async function (resolve,reject){
+        
+        if(initialload){
+            await new Promise(resolve=>setTimeout(resolve,1000));
+            console.log("initial load");
+            initialload=false;
+        }
+         
+        db=request.result;
+        tx=db.transaction("Playlist","readwrite");
+        store=tx.objectStore("Playlist");
+
+        const data=store.clear();
+        data.onsuccess=function(e){
+            
+            if(e.target.result!=undefined){
+                   resolve(true);
+            }
+            resolve(false);
+        }
+
+        data.onerror=function(e){
+            reject(e);
+        }
+        
+
+        
+    }
+); 
+}
+
+
+const getUserPlayList=async(data)=>{
+   // clear previous playlist;
+   await clearPlayList();
+   const res=await fetchPlaylist(data);
+
+   res.data.map((song)=>{ // add song to db
+       addToPlaylist(song);
+   })
+}
+
+
+
+
 
 const checkInPlaylist=async(id)=>{
     
     return new Promise(
+        
         async function (resolve,reject){
         
         if(initialload){
@@ -179,6 +242,7 @@ export{
     addToPlaylist,
     checkInPlaylist,
     getPlaylist,
-    search_song
+    search_song,
+    getUserPlayList
 }
 

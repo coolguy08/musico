@@ -2,6 +2,7 @@ import React,{useState,useEffect}from 'react'
 import { GoogleLogout } from 'react-google-login';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import { Signout } from '../requests';
 
 import {Wrapper,Text,Image, ImageWrapper} from '../styles/Welcome';
 import Back from './Back';
@@ -21,12 +22,13 @@ const Qualitymap={
 
 function Settings() {
 
-    const [user, setuser] = useState(sessionStorage.user && JSON.parse(sessionStorage.user) || undefined);
+    const [user, setuser] = useState(localStorage.user && JSON.parse(localStorage.user) || undefined);
     const [bitrate, setbitrate] = useState(sessionStorage.quality || '96');
     const history=useHistory();
 
-    function logout(){
-        sessionStorage.removeItem('user');
+    async function logout(){
+        Signout({guid:JSON.parse(localStorage.user).googleId});
+        localStorage.removeItem('user');
         history.push('/')
         console.log("logged out");
     }
@@ -38,7 +40,7 @@ function Settings() {
 
     useEffect(() => {
        
-        if(!sessionStorage.user){
+        if(!localStorage.user){
             history.push('/');
         }
         return () => {

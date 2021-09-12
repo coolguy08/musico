@@ -51,11 +51,94 @@ const GetLyrics=async(id)=>{
 
 }
 
+const fetchPlaylist=async(data)=>{
+
+    const res=await fetch(url+`playlist`,{
+        method:'post',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+        body:JSON.stringify(data)
+
+    })
+
+    const result=await res.json();
+
+    return result;
+}
+
+const login=async(data)=>{
+      
+      
+      const res=await fetch(url+`user/login`,
+      {
+          method:'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(data)
+      });
+
+      const result=await res.json();
+
+      return result;
+}
+
+const AddSong=async(data)=>{
+    const res=await fetch(url+`playlist/add`,
+      {
+          method:'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(data)
+      });
+
+      const result=await res.json();
+
+      return result;
+}
+
+const RemoveSong=async(data)=>{
+    const res=await fetch(url+`playlist/remove`,
+      {
+          method:'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(data)
+      });
+
+      const result=await res.json();
+
+      return result;
+}
+
+const Signout=async(data)=>{
+    const res=await fetch(url+`user/logout`,
+      {
+          method:'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(data)
+      });
+
+      const result=await res.json();
+
+      return result;
+}
+
 export{
+    login,
+    fetchPlaylist,
     GetLaunchData,
     GetSearch,
     GetSongURL,
     GetDetails,
     GetSongs,
-    GetLyrics
+    GetLyrics,
+    AddSong,
+    Signout,
+    RemoveSong
 }

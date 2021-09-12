@@ -5,7 +5,7 @@ import { Text } from '../styles/Styles';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
 import { share } from '../utils/common';
-import { GetLyrics } from '../requests';
+import {  GetLyrics } from '../requests';
 import Error404 from './Error404';
 
 
@@ -51,10 +51,17 @@ function Player() {
 
 
     async function onlikecliked(){
+
+          
+
           if(like){
+            
             await removeFromPlaylist(song.id);
+
           }
-          else{
+          else
+          {
+            
              addToPlaylist(song);
           }
           setlike(!like);
