@@ -77,10 +77,10 @@ useEffect(() => {
             <br/>
             
             <ButtonWrapper>
-            <Text color="yellow" family="Poppins" size="1.0em" onClick={handlePlay} padding="3px"><Picon color="yellow" size="1.2em"><i class="fa fa-play"></i></Picon>Play Now</Text>
-            <Text color="white" family="Poppins" size="1.0em" onClick={addnext} padding="3px"><Picon color="white" size="1.2em"><i class="fa fa-forward"></i></Picon>Play Next</Text>
-            <Text color={like?"red":"white"} family="Poppins" size="1.0em" padding="3px" onClick={onlikecliked}><Picon color={like?"red":"white"} size="1.3em"><i class="fa fa-heart"></i></Picon>{like?"Remove":"Add"}</Text>
-            <Text color="white" family="Poppins" size="1.0em" onClick={()=>share({title:props.data.title,url:window.location.origin+`/view/song/${getid(props.data.perma_url||props.data.url)}`,text:props.data.title})} padding="3px"><Picon color="white" size="1.2em"><i class="fa fa-share-alt"></i></Picon>Share</Text>
+            <Item color="yellow" family="Poppins" size="1.0em" onClick={handlePlay} padding="3px"><Picon color="yellow" size="1.2em"><i class="fa fa-play"></i></Picon>Play Now</Item>
+            <Item color="white" family="Poppins" size="1.0em" onClick={addnext} padding="3px"><Picon color="white" size="1.2em"><i class="fa fa-forward"></i></Picon>Play Next</Item>
+            <Item color={like?"red":"white"} family="Poppins" size="1.0em" padding="3px" onClick={onlikecliked}><Picon color={like?"red":"white"} size="1.3em"><i class="fa fa-heart"></i></Picon>{like?"Remove":"Add"}</Item>
+            <Item color="white" family="Poppins" size="1.0em" onClick={()=>share({title:props.data.title,url:window.location.origin+`/view/song/${getid(props.data.perma_url||props.data.url)}`,text:props.data.title})} padding="3px"><Picon color="white" size="1.2em"><i class="fa fa-share-alt"></i></Picon>Share</Item>
             
             </ButtonWrapper>
             
@@ -117,13 +117,22 @@ padding-right:10px;
 
 `
 const Text=styled.div`
-
 padding:${props=>props.padding || 'opx'};
 color:${props=>props.color || 'red'};
 font-family:${props=>props.family || 'mono'};
 font-size:${props=>props.size || "10px"};
 font-weight:${props=>props.bold};
 
+`
+
+const Item=styled.div`
+display:flex;
+align-items:center;
+padding:${props=>props.padding || 'opx'};
+color:${props=>props.color || 'red'};
+font-family:${props=>props.family || 'mono'};
+font-size:${props=>props.size || "10px"};
+font-weight:${props=>props.bold};
 `
 const TextWrapper=styled.div`
 
