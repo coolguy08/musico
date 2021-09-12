@@ -6,8 +6,7 @@ let request=window.indexedDB.open("Playlist",2);
 
 let db,tx,store,index;
 
-const loginStatus=localStorage.user!=undefined?true:false;
-const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
+
 
 
 request.onupgradeneeded=function(e) {
@@ -41,6 +40,8 @@ request.onerror=function(e){
 
 
 const addToPlaylist=(song)=>{
+    const loginStatus=localStorage.user!=undefined?true:false;
+const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
     if(loginStatus){
         let r=AddSong({guid:guid,song:song});
     }
@@ -54,6 +55,8 @@ const addToPlaylist=(song)=>{
 }
 
 const removeFromPlaylist=(id)=>{
+    const loginStatus=localStorage.user!=undefined?true:false;
+const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
     if(loginStatus){
     let r=RemoveSong({guid:guid,id:id});
     }
