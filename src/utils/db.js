@@ -39,10 +39,12 @@ request.onerror=function(e){
 
 
 
-const addToPlaylist=(song)=>{
+const addToPlaylist=(song,fromserver)=>{
+
     const loginStatus=localStorage.user!=undefined?true:false;
-const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
-    if(loginStatus){
+    const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
+
+    if(loginStatus && fromserver==undefined){
         let r=AddSong({guid:guid,song:song});
     }
   
@@ -56,9 +58,10 @@ const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
 
 const removeFromPlaylist=(id)=>{
     const loginStatus=localStorage.user!=undefined?true:false;
-const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
+    const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
+
     if(loginStatus){
-    let r=RemoveSong({guid:guid,id:id});
+       let r=RemoveSong({guid:guid,id:id});
     }
 
     db=request.result;
@@ -78,6 +81,7 @@ const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
         }
     ); 
 }
+
 let initialload=true;
 
 const getPlaylist=()=>{
@@ -187,7 +191,7 @@ const getUserPlayList=async(data)=>{
    const res=await fetchPlaylist(data);
 
    res.data.map((song)=>{ // add song to db
-       addToPlaylist(song);
+       addToPlaylist(song,true);
    })
 }
 

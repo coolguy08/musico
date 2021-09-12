@@ -46,6 +46,13 @@ function Welcome() {
         if(localStorage.user){
             history.push('/home');
         }
+        return () => {
+           
+        }
+    }, [])
+    
+    useEffect(() => {
+       
         const crousel=setTimeout(changeindex,3000);
         return () => {
             clearTimeout(crousel);
