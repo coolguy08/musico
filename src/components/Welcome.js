@@ -68,6 +68,7 @@ function Welcome() {
             const data={
                     
                     name:response.profileObj.name,
+                    email:response.profileObj.email,
                     guid:response.profileObj.googleId,
                     profilepic:response.profileObj.imageUrl,
 

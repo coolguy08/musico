@@ -84,7 +84,7 @@ useEffect(() => {
             
             </ButtonWrapper>
             
-            <Icon tobottom={true} BorderRadius="15px" width="100%" height="50px" size="1.2em" background="#2a2d36" color="white" onClick={()=>props.setopen(false)}>Cancel</Icon>
+            <Icon tobottom={true} BorderRadius="15px" width="100%" height="50px" size="1.2em" background="#2a2d36" color="white" onClick={()=>props.setopen(false)}>Close</Icon>
             
               
 
