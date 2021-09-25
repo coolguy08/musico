@@ -8,6 +8,7 @@ A Music App Developed using MERN stack and [JiosaavnApi](https://github.com/cool
 
 ## Tech used
 - Reactjs (Frontend)  
+- Redux
 - Expressjs (Backend)
 - Used [JiosaavnAPI](https://github.com/coolguy08/jiosaavn_api)
 
