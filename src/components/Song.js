@@ -7,11 +7,12 @@ import Menubar from './Menubar';
 import useGetDetails from '../hooks/useGetDetails';
 import Loading from './Loading';
 import List from './List';
-import { PlaySong } from '../utils/controls';
+import { PlaySong, updateAlbum } from '../utils/controls';
 import { useHistory } from 'react-router';
 import Back from './Back';
 import { share } from '../utils/common';
 import Error404 from './Error404';
+import { useDispatch } from 'react-redux';
 
 function imageQuality(url){
   return url.replace('150x150','500x500').replace('50x50','500x500')
@@ -23,15 +24,18 @@ function imageQuality(url){
 
 function Song(props) {
 
-  const [issongloading, setissongloading] = useState(false)
+
   const {loading,data}=useGetDetails(props.id,props.type);
   const history=useHistory();
+
+  const dispatch=useDispatch();
   
-      async function onListItemPress(data){
-       
-        await PlaySong(data,setissongloading);
-        
-      }
+    const onListItemPress=async(val)=>{
+        PlaySong(val,dispatch);
+        if(val.type==="song"){  //checking if the clicked item is song or not to update playlist
+          updateAlbum([val],0);
+        }
+     }
   
   if(loading){
     return <><Loading/><Menubar/></>
@@ -66,7 +70,7 @@ function Song(props) {
           </Flexbox>
           
           <ListWrapper>
-              <List data={data.songs} handleClick={onListItemPress}/>
+              <List data={data.songs} />
           </ListWrapper>
            
            {/*you might like Section*/}
@@ -114,7 +118,7 @@ function Song(props) {
          </Footer>
 
         </Wrapper>
-        <Menubar miniplayerloading={issongloading}/>
+        <Menubar />
         </>
     )
 }

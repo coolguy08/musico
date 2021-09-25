@@ -1,17 +1,38 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import styled from 'styled-components';
 import { Flexbox } from '../styles/Home';
 import {Text} from '../styles/Styles';
-import { updateAlbum } from '../utils/controls';
+import { getid } from '../utils/common';
+import { PlaySong, updateAlbum } from '../utils/controls';
 import PopUp from './PopUp';
 
 function List(props){
 
-    const handleClick=(val,index)=>{
-         props.handleClick(val);
+    const dispatch=useDispatch();
+
+    const history=useHistory();
+    
+    const handleClick=async(val,index)=>{
+
+        if(val.type=="album" || val.type=="playlist"){
+           
+            history.push(`/view/${val.type}/${getid(val.url)}`);
+            return;
+
+        }else if(val.type=="artist"){
+            
+            history.push(`/artist/${getid(val.url)}`);
+            return;
+        }
+
+         //props.handleClick(val);
+
+         PlaySong(val,dispatch);
 
          if(val.type==="song"){  //checking if the clicked item is song or not to update playlist
-            updateAlbum(props.data,index)
+            updateAlbum(props.data,index);
          }
     }
     
@@ -32,6 +53,8 @@ function List(props){
 function ListItem({data,handleClick,index})
 {
      const [open, setopen] = useState(false);
+
+     const cursong=useSelector((state)=>state.song.cursong);
    
 
     return (
@@ -41,8 +64,8 @@ function ListItem({data,handleClick,index})
              
              <Image src={data.image} height="50px" width="50px"/>
              <ItemWrapper>
-             <Text color={JSON.parse(localStorage.getItem('current')) && data.id==JSON.parse(localStorage.getItem('current')).id?"yellow":"white"} family="Poppins" size="0.8em" width="180px">{data.title}</Text>
-             <Text color={JSON.parse(localStorage.getItem('current')) && data.id==JSON.parse(localStorage.getItem('current')).id?"yellow":"gray"} family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
+             <Text color={cursong && data.id==cursong.id?"yellow":"white"} family="Poppins" size="0.8em" width="180px">{data.title}</Text>
+             <Text color={cursong && data.id==cursong.id?"yellow":"gray"} family="Poppins" size="0.6em" width="220px">{data.description || data.subtitle}</Text>
              </ItemWrapper>
  
             

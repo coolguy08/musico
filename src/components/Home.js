@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Cards from './Cards';
 
 function Home() {
-    const [issongloading, setissongloading] = useState(false)
+    
    
     const {loading,data}=useGetLaunchData();
 
@@ -53,7 +53,7 @@ function Home() {
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Search By Artists</Text>
             <SliderWrapper>
                 <Flexbox >
-                   <Cards data={data.artist_recos} cardtype="circle" setloading={setissongloading}/>
+                   <Cards data={data.artist_recos} cardtype="circle"/>
 
                 </Flexbox>
             </SliderWrapper>
@@ -65,7 +65,7 @@ function Home() {
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Radio Stations</Text>
             <SliderWrapper>
                 <Flexbox  width={`${(data.radio.length/2)*110}px`} wrap="wrap">
-                    <Cards data={data.radio} cardtype="circle" setloading={setissongloading}/>
+                    <Cards data={data.radio} cardtype="circle" />
                      
                 </Flexbox>
             </SliderWrapper>
@@ -110,7 +110,7 @@ function Home() {
          </Section>
             
       </Wrapper>
-      <Menubar miniplayerloading={issongloading}/>
+      <Menubar />
       </>
      )
 }

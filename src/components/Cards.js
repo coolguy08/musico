@@ -5,6 +5,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { getid } from '../utils/common';
 import { PlayRadio } from '../utils/controls';
+import { useDispatch } from 'react-redux';
 
 
 
@@ -57,13 +58,14 @@ function SimpleCard({data,width,height})
     )
 }
 
-function CircularCard({data,setloading})
+function CircularCard({data})
 {
+    const dispatch=useDispatch();
     return (
         <>
         {
             data.map((val,index)=>{
-                return <Wrapper key={val.id+index} onClick={()=>PlayRadio(val.title,val.more_info.featured_station_type,setloading)}>
+                return <Wrapper key={val.id+index} onClick={()=>PlayRadio(val.title,val.more_info.featured_station_type,dispatch)}>
      
                 <LazyLoadImage
                 

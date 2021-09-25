@@ -12,14 +12,10 @@ import { imageQuality, share } from '../utils/common';
 import Back from './Back';
 import Error404 from './Error404';
 function Artist(props) {
-    const [issongloading, setissongloading] = useState(false)
+    
 
 
-    async function onListItemPress(data){
-       
-        await PlaySong(data,setissongloading);
-        
-      }
+  
       
 const {loading,data}=useGetDetails(props.match.params.id,'artist')
 
@@ -68,7 +64,7 @@ if(loading===false && !data.artistId){
           
 
         { data.topSongs.length>0 && <ListWrapper>
-            <List data={data.topSongs} handleClick={onListItemPress} title="Top Songs"/>
+            <List data={data.topSongs} title="Top Songs"/>
          </ListWrapper>}
           
             
@@ -126,7 +122,7 @@ if(loading===false && !data.artistId){
          </Section> */}
 
         </Wrapper>
-        <Menubar miniplayerloading={issongloading}/>
+        <Menubar />
         </>
     )
 }

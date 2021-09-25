@@ -10,19 +10,17 @@ import { PlayAlbum, PlaySong } from '../utils/controls';
 import { imageQuality, share } from '../utils/common';
 import Back from './Back';
 import Error404 from './Error404';
+import { useDispatch } from 'react-redux';
 
 
 
 function Album(props){
            
-      const [issongloading, setissongloading] = useState(false)
+      
+      const dispatch=useDispatch();
       const {loading,data}=useGetDetails(props.id,props.type,50);
 
-      async function onListItemPress(data){
-       
-        await PlaySong(data,setissongloading);
-        
-      }
+      
      
     
     if(loading){
@@ -43,7 +41,7 @@ function Album(props){
 
           <IconWrapper>
             <Icon background="#2a2d36" width="50px" height="50px" color="white" BorderRadius="50%"> <i class="fa fa-heart"></i></Icon>
-            <Icon background="green" width="50px" height="50px" color="white" BorderRadius="50%" onClick={()=>PlayAlbum(data.list,setissongloading)}><i class="fa fa-play"></i></Icon>
+            <Icon background="green" width="50px" height="50px" color="white" BorderRadius="50%" onClick={()=>PlayAlbum(data.list,dispatch)}><i class="fa fa-play"></i></Icon>
           </IconWrapper>
 
           <Text color="white" family="Poppins" size="1.2em" padding="10px 0 0 20px">{data.title}</Text>
@@ -57,7 +55,7 @@ function Album(props){
           </Flexbox>
           
           <ListWrapper>
-              <List data={data.list} handleClick={onListItemPress}/>
+              <List data={data.list} />
           </ListWrapper>
            
            
@@ -82,7 +80,7 @@ function Album(props){
          </Footer>
 
         </Wrapper>
-        <Menubar miniplayerloading={issongloading}/>
+        <Menubar />
         </>
     )
 }

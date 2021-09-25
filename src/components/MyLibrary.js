@@ -10,16 +10,11 @@ import Loading from './Loading';
 
 function MyLibrary(){
     const [songs, setsongs] = useState([]);
-    const [issongloading, setissongloading] = useState(false);
+    
     const [loading, setloading] = useState(true);
 
     const history=useHistory();
-      async function onListItemPress(data){
-       
-        await PlaySong(data,setissongloading);
-        
-        
-      }
+     
      
     useEffect(() => {
         
@@ -63,14 +58,14 @@ function MyLibrary(){
            
             <ListWrapper>
                 {songs.length > 0?
-                <List data={songs} handleClick={onListItemPress} title="Songs"></List>:
+                <List data={songs}  title="Songs"></List>:
                 <center><Text color="white" size="1.2em" family="Poppins" padding="50px 0 0 0">No Songs Found</Text></center>
                 }
             </ListWrapper>
             
             
         </Wrapper>
-        <Menubar miniplayerloading={issongloading} />
+        <Menubar/>
         </>
     )
 }

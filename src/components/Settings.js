@@ -1,7 +1,9 @@
 import React,{useState,useEffect}from 'react'
 import { GoogleLogout } from 'react-google-login';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
+import { setUser } from '../redux/actions/Auth';
 import { Signout } from '../requests';
 
 import {Wrapper,Text,Image, ImageWrapper} from '../styles/Welcome';
@@ -11,7 +13,7 @@ import Header from './Header';
 
 const clientId="1097284669182-eee65ec791mdlue6d2npfhhpai794g10.apps.googleusercontent.com";
 
-const qualities=['Low','Medium','High']
+const qualities=['Low','Medium','High'];
 
 const Qualitymap={
     'Low':'96',
@@ -22,11 +24,13 @@ const Qualitymap={
 
 function Settings() {
 
-    const [user, setuser] = useState(localStorage.user && JSON.parse(localStorage.user) || undefined);
+    const user=useSelector((state)=>state.Auth.user);
+    const dispatch=useDispatch();
     const [bitrate, setbitrate] = useState(sessionStorage.quality || '96');
     const history=useHistory();
 
     async function logout(){
+        dispatch(setUser(null));
         Signout({guid:JSON.parse(localStorage.user).googleId});
         localStorage.removeItem('user');
         history.push('/')
@@ -46,7 +50,7 @@ function Settings() {
         return () => {
             
         }
-    }, [])
+    }, []);
 
     if(user==undefined){
         return null;
@@ -103,7 +107,8 @@ export default Settings
 
 const List=styled.div`
 
-padding-bottom:40px
+padding-bottom:40px;
+
 `
 
 const ListItem=styled.div`

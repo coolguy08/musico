@@ -8,7 +8,7 @@ import Loading from './Loading';
 import { useState } from 'react';
 
 function Browse(){
-    const [issongloading, setissongloading] = useState(false);
+   
    
 const {loading,data}=useGetLaunchData();
 
@@ -43,7 +43,7 @@ const {loading,data}=useGetLaunchData();
             <Text color="white" family="Poppins" size="1.2em" bold="600" padding="0 0 20px 20px">Radio Stations</Text>
             <SliderWrapper>
                 <Flexbox  width={`${(data.radio.length/2)*110}px`} wrap="wrap">
-                    <Cards data={data.radio} cardtype="circle" setloading={setissongloading}/>
+                    <Cards data={data.radio} cardtype="circle" />
                      
                 </Flexbox>
             </SliderWrapper>
@@ -68,7 +68,7 @@ const {loading,data}=useGetLaunchData();
         
             
       </Wrapper>
-      <Menubar miniplayerloading={issongloading}/>
+      <Menubar />
       </>
      )
 }

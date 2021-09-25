@@ -1,3 +1,4 @@
+import { setSong, setsongloading } from "../redux/actions/song";
 import { GetSongs, GetSongURL } from "../requests";
 import { getid } from "./common";
 
@@ -9,11 +10,11 @@ let songs=[
 
 let index=-1;
 
-let song_status,seeker;
+let song_status;
 
 function initialize(){
     song_status=document.getElementById('toggleplay');
-    seeker=document.getElementById('seeker');
+   
 }
 
 
@@ -56,7 +57,7 @@ if ('mediaSession' in window.navigator){
     window.navigator.mediaSession.setActionHandler('previoustrack', function() { Playprev(()=>{}); });
     window.navigator.mediaSession.setActionHandler('nexttrack', function() { Playnext(()=>{});});
     
-  }
+}
 
 
 function MediaSessionApi(){
@@ -69,16 +70,20 @@ function MediaSessionApi(){
          
           { src: song.image, sizes: '512x512', type: 'image/png' },
         ]
-      });
+    });
 }
 
 
 
-async function PlaySong(data,setloading){
+async function PlaySong(data,dispatch){
      
     audio.pause();
+
+    
+    dispatch(setsongloading(true));
+   
   
-    setloading(true);
+   // setloading(true);
      const cur_song={
       id:data.id,
       title:data.title,
@@ -86,7 +91,9 @@ async function PlaySong(data,setloading){
       image:data.image.replace('150x150','250x250').replace('50x50','250x250'),
       share_url:data.share_url || window.location.origin+`/view/song/${getid(data.perma_url || data.url)}`
      }
+
      
+     dispatch(setSong(cur_song));
 
   localStorage.setItem('current',JSON.stringify(cur_song));
   
@@ -101,7 +108,10 @@ async function PlaySong(data,setloading){
   localStorage.setItem('current',JSON.stringify(song));
 
 
-  setloading(false);
+  //setloading(false);
+  dispatch(setsongloading(false));
+
+ 
  
 
 
@@ -146,6 +156,7 @@ function togglePlay(){
 }
 
 function addtonext(data){
+
   if(songs.length==0){
     songs.push(data);
     alert('song added');
@@ -157,51 +168,52 @@ function addtonext(data){
 
 }
 
-async function Playnext(setloading){
+async function Playnext(dispatch){
     
     if(index+1>=songs.length){
-        setloading(false);
+        dispatch(setsongloading(false));
         return;
     }
-    else{
+    else
+    {
       index++;
-      await PlaySong(songs[index],setloading);
+      await PlaySong(songs[index],dispatch);
     }
     
 }
 
-async function Playprev(setloading){
+async function Playprev(dispatch){
     if(index<=0){
-        setloading(false);
+        dispatch(setsongloading(false));
         return;
 
     }
     index--;
-    await PlaySong(songs[index],setloading);
+    await PlaySong(songs[index],dispatch);
 }
 
 
 
 
-async function PlayAlbum(data,setloading){
+async function PlayAlbum(data,dispatch){
 
   songs=data;
   index=-1
-  await Playnext(setloading);
+  await Playnext(dispatch);
    
 }
 
-async function PlayRadio(radio_name,radiotype,setloading){
+async function PlayRadio(radio_name,radiotype,dispatch){
   
-  
-  setloading(true);
+  dispatch(setsongloading(true));
+  //setloading(true);
   const d=await GetSongs(radio_name,radiotype,'','radio');
   if(d.data[0]!=null){
     songs=d.data;
     index=-1;
   }
   
-  await Playnext(setloading);
+  await Playnext(dispatch);
 
 }
 

@@ -6,17 +6,25 @@ import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
 import { share } from '../utils/common';
 import {  GetLyrics } from '../requests';
+import {useDispatch, useSelector} from 'react-redux';
 import Error404 from './Error404';
+import { setsongloading } from '../redux/actions/song';
 
 
 
 function Player() {
   
-    const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')))
-    const [loading, setloading] = useState(false);
+    const dispatch = useDispatch();
+    
+    const song=useSelector((state)=>state.song.cursong);
+
+    const loading=useSelector((state)=>state.song.loading);
+
     const [like, setlike] = useState(false);
+
+
     const [lyricsloading, setlyricsloading] = useState(true);
-    const [lyrics, setlyrics] = useState('')
+    const [lyrics, setlyrics] = useState('');
     
     const [seekerpos, setseekerpos] = useState(localStorage.getItem('currentTime') || 0);
     const audio=document.getElementById('player');
@@ -24,7 +32,9 @@ function Player() {
     
 
     
-    useEffect(() => {  // geet lyrics of song 
+    useEffect(() => {  // get lyrics of song 
+
+
       async function  get(){
         setlyricsloading(true);
         const res=await GetLyrics(song?song.id:'');
@@ -74,9 +84,6 @@ function Player() {
 
     useEffect(() => {
       
-     
-      
-
       async function get(){ //checking for a like
         const r=await checkInPlaylist(song?song.id:'');
         if(r){
@@ -87,18 +94,14 @@ function Player() {
         }
       }
 
-      const newdata=JSON.parse(localStorage.getItem('current'));
-      if(newdata && newdata.id!==song.id ){  //update only when song changes
-        setsong(newdata);
-        
-      }
+      
       get();
 
       
       return () => {
         
       }
-    }, [loading]);
+    }, [song]);
 
      function checkbuffer(){
 
@@ -109,7 +112,8 @@ function Player() {
      const  onwaiting=()=>{
 
       slowInternetTimeout = setTimeout(() => {
-        setloading(true);
+             dispatch(setsongloading(true));
+            //setloading(true);
         });
      }
 
@@ -118,7 +122,7 @@ function Player() {
       clearTimeout(slowInternetTimeout);
       slowInternetTimeout = null;
       //continue playing
-      setloading(false);
+      dispatch(setsongloading(false));
       audio.play();
       }
       
@@ -173,7 +177,7 @@ function Player() {
        
         
         const onsongended=()=>{
-          Playnext(setloading)
+          Playnext(dispatch);
         }
         
         audio.addEventListener("timeupdate",onaudiotimeupdate);
@@ -191,7 +195,7 @@ function Player() {
     }, [])
 
     if(song==undefined){
-      return <Error404/>
+      return <Error404/>;
     }
     return (
         <Wrapper>
@@ -247,13 +251,13 @@ function Player() {
             
             <ToolBar>
                 <Icon color={like?"red":"white"} size="1.8em" onClick={onlikecliked}><i class="fa fa-heart"></i></Icon>
-                <Icon color="white" size="1.8em" onClick={()=>Playprev(setloading)}><i class="fa fa-chevron-circle-left"></i></Icon>
+                <Icon color="white" size="1.8em" onClick={()=>Playprev(dispatch)}><i class="fa fa-chevron-circle-left"></i></Icon>
                 {
                   loading?<div className="loader" style={{margin:"5px"}}></div>:
                   <Icon color="white" size="2.3em" onClick={togglePlay}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></Icon>
 
                 }
-                <Icon color="white" size="1.8em" onClick={()=>Playnext(setloading)}><i class="fa fa-chevron-circle-right"></i></Icon>
+                <Icon color="white" size="1.8em" onClick={()=>Playnext(dispatch)}><i class="fa fa-chevron-circle-right"></i></Icon>
                 <Icon color="white" size="1.8em" onClick={()=>share({title:song.title,url:song.share_url,text:song.title})}><i class="fa fa-share-alt"></i></Icon>
 
             </ToolBar>

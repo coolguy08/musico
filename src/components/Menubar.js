@@ -4,41 +4,34 @@ import styled from 'styled-components';
 import { Playnext, togglePlay } from '../utils/controls';
 import {Text} from '../styles/Styles';
 import Loader from './Loader';
+import { useDispatch, useSelector } from 'react-redux';
+import {setTab} from '../redux/actions/Tab';
 
 
+function Menubar(){
 
-function setactivetab(tab){
-
-    sessionStorage.setItem('tab',tab);
-}
-
-function getactivetab(){
-  return sessionStorage.getItem('tab');
-}
-
-function Menubar({miniplayerloading}){
-
-    const [tab, settab] = useState(1);
+    const tab=useSelector((state)=>state.tab.activetab);
+    const dispatch = useDispatch();
     
-    const [song, setsong] = useState(JSON.parse(localStorage.getItem('current')));
-    const [loading, setloading] = useState(false);
+    const cursong=useSelector((state)=>state.song.cursong);
 
-    const pathname=window.location.pathname;
+    const loading=useSelector((state)=>state.song.loading);
+
+    
     const audio=document.getElementById('player')
+
+
+    function setactivetab(tab){
+        
+        dispatch(setTab(tab));
+    }
+
+
     useEffect(() => {
         
-
-        switch(pathname){
-            case '/home':settab(1);setactivetab(1);break;
-            case '/search':settab(2);setactivetab(2);break;
-            case '/browse':settab(3);setactivetab(3);break;
-            case '/mylibrary':settab(4);setactivetab(4);break;
-            default:settab(getactivetab());
-        }
-        
         const onsongended=()=>{
-            Playnext(setloading)
-          }
+            Playnext(dispatch);
+        }
         audio.addEventListener("ended",onsongended);
         
         return () => {
@@ -50,36 +43,7 @@ function Menubar({miniplayerloading}){
     }, [])
 
 
-    useEffect(() => {
-       
-        function onplaying(){
-            
-            const newdata=JSON.parse(localStorage.getItem('current'));
-            if(!song || newdata.id!==song.id){  //update only when song changes
-                setsong(newdata);
-                
-            }
-        }
-          
-        audio.addEventListener("playing",onplaying);
-          
-        return () => {
-            audio.removeEventListener("playing",onplaying);
-        }
-
-    }, [])
-
-
-    useEffect(() => {
-        const newdata=JSON.parse(localStorage.getItem('current'));
-            if(!song || newdata.id!==song.id){  //update only when song changes
-                setsong(newdata);
-            }
-          
-        return () => {
-            
-        }
-    }, [miniplayerloading,loading])
+   
 
    
     const history=useHistory();
@@ -90,31 +54,31 @@ function Menubar({miniplayerloading}){
     return (
         <Wrapper>
 
-        {song  && <NowPlaying song={song} history={history} loading={miniplayerloading || loading}/>}
+        {cursong  && <NowPlaying song={cursong} history={history} loading={loading}/>}
         
         <MenuWrapper>
-            <a onClick={()=>history.push('/home')}>
+            <a onClick={()=>{history.push('/home');setactivetab(1)}}>
             <MenuItem active={tab==1?true:false}>
                <Icon><i class="fa fa-home"></i></Icon>
                <Text family="Poppins">Home</Text>
             </MenuItem>
 
             </a>
-            <a onClick={()=>history.push('/search')}>
+            <a onClick={()=>{history.push('/search');setactivetab(2)}}>
             <MenuItem active={tab==2?true:false}>
                <Icon><i class="fa fa-search"></i></Icon>
                <Text family="Poppins">Search</Text>
             </MenuItem>
             </a>
             
-            <a onClick={()=>history.push('/browse')}>
+            <a onClick={()=>{history.push('/browse');setactivetab(3)}}>
             <MenuItem active={tab==3?true:false}>
                <Icon><i class="fa fa-compass"></i></Icon>
                <Text family="Poppins">Browse</Text>
             </MenuItem>
             </a>
 
-            <a onClick={()=>history.push('/mylibrary')}>
+            <a onClick={()=>{history.push('/mylibrary');setactivetab(4)}}>
             <MenuItem active={tab==4?true:false}>
                 <Icon><i class="fa fa-user"></i></Icon>
                <Text family="Poppins">My Library</Text>

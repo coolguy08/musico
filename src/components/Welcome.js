@@ -4,6 +4,8 @@ import {Wrapper,Text,Image, ImageWrapper} from '../styles/Welcome';
 import {GoogleLogin} from 'react-google-login';
 import { login } from '../requests';
 import { getUserPlayList } from '../utils/db';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser } from '../redux/actions/Auth';
 
 
 
@@ -37,13 +39,17 @@ function Welcome() {
 
    const history=useHistory();
 
+   const dispatch=useDispatch();
+
+   const user=useSelector((state)=>state.Auth.user);
+
     const changeindex=()=>
     {
         setindex(((index+1)%greets.length));
     }
 
     useEffect(() => {
-        if(localStorage.user){
+        if(user){
             history.push('/home');
         }
         return () => {
@@ -64,6 +70,8 @@ function Welcome() {
         if(response && response.accessToken){
             
             localStorage.setItem('user',JSON.stringify(response.profileObj));
+            
+            dispatch(setUser(response.profileObj));
             
             const data={
                     
@@ -103,6 +111,7 @@ function Welcome() {
           
 
             <GoogleLogin
+                
                 clientId={clientId}
                 buttonText="Login With Google"
                 onSuccess={responseGoogle}
