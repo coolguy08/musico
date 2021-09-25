@@ -2,19 +2,10 @@ import React, { Suspense, lazy } from 'react';
 import Welcome from "./components/Welcome";
 import styled from 'styled-components';
 import {BrowserRouter,Route,Switch} from 'react-router-dom';
-
-// import Home from "./components/Home";
-// import View from "./components/View";
-// import Search from "./components/Search";
-// import Browse from "./components/Browse";
-// import MyLibrary from "./components/MyLibrary";
-// import Artist from "./components/Artist";
-
-// import Player from "./components/Player";
 import { useEffect } from "react";
-// import Settings from "./components/Settings";
-// import Error404 from "./components/Error404";
 import Loading from './components/Loading';
+import { useDispatch } from 'react-redux';
+import { Playnext, Playprev, togglePlay } from './utils/controls';
 
 const Home = lazy(() => import('./components/Home'));
 const View = lazy(() => import('./components/View'));
@@ -30,7 +21,21 @@ const Error404 = lazy(() => import('./components/Error404'));
 
 function App(){
 
+  const dispatch=useDispatch();
+
   useEffect(() => {
+
+    if ('mediaSession' in window.navigator){
+   
+  
+      window.navigator.mediaSession.setActionHandler('play', function() { togglePlay();});
+      window.navigator.mediaSession.setActionHandler('pause', function() { togglePlay();});
+     
+
+      window.navigator.mediaSession.setActionHandler('previoustrack', function() { Playprev(dispatch)});
+      window.navigator.mediaSession.setActionHandler('nexttrack', function() { Playnext(dispatch)});
+      
+  }
     const song=JSON.parse(localStorage.getItem('current'));
     if(song){
       

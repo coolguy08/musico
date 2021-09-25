@@ -48,18 +48,6 @@ audio.onplay=()=>{
 }
 
 
-if ('mediaSession' in window.navigator){
-   
-  
-    window.navigator.mediaSession.setActionHandler('play', function() { togglePlay();});
-    window.navigator.mediaSession.setActionHandler('pause', function() { togglePlay();});
-   
-    window.navigator.mediaSession.setActionHandler('previoustrack', function() { Playprev(()=>{}); });
-    window.navigator.mediaSession.setActionHandler('nexttrack', function() { Playnext(()=>{});});
-    
-}
-
-
 function MediaSessionApi(){
     const song=JSON.parse(localStorage.getItem('current'));
     navigator.mediaSession.metadata = new window.MediaMetadata({
