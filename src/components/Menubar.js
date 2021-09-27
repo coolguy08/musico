@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react'
+import React, { useEffect} from 'react'
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import { Playnext, togglePlay } from '../utils/controls';
@@ -28,6 +28,18 @@ function Menubar(){
 
 
     useEffect(() => {
+
+       const pathname=window.location.pathname;
+
+       switch(pathname){
+           case '/home':setactivetab(1);break;
+           case '/search':setactivetab(2);break;
+           case '/browse':setactivetab(3);break;
+           case '/mylibrary':setactivetab(4);break;
+          
+       }
+
+
         
         const onsongended=()=>{
             Playnext(dispatch);
@@ -58,28 +70,28 @@ function Menubar(){
         
         <MenuWrapper>
             <a onClick={()=>{history.push('/home');setactivetab(1)}}>
-            <MenuItem active={tab==1?true:false}>
+            <MenuItem active={tab===1?true:false}>
                <Icon><i class="fa fa-home"></i></Icon>
                <Text family="Poppins">Home</Text>
             </MenuItem>
 
             </a>
             <a onClick={()=>{history.push('/search');setactivetab(2)}}>
-            <MenuItem active={tab==2?true:false}>
+            <MenuItem active={tab===2?true:false}>
                <Icon><i class="fa fa-search"></i></Icon>
                <Text family="Poppins">Search</Text>
             </MenuItem>
             </a>
             
             <a onClick={()=>{history.push('/browse');setactivetab(3)}}>
-            <MenuItem active={tab==3?true:false}>
+            <MenuItem active={tab===3?true:false}>
                <Icon><i class="fa fa-compass"></i></Icon>
                <Text family="Poppins">Browse</Text>
             </MenuItem>
             </a>
 
             <a onClick={()=>{history.push('/mylibrary');setactivetab(4)}}>
-            <MenuItem active={tab==4?true:false}>
+            <MenuItem active={tab===4?true:false}>
                 <Icon><i class="fa fa-user"></i></Icon>
                <Text family="Poppins">My Library</Text>
             </MenuItem>
@@ -120,7 +132,7 @@ function NowPlaying({song,history,loading}){
 
 
 
-export default React.memo(Menubar);
+export default Menubar;
 
 const PlayerIcon=styled.a`
 color:white;
