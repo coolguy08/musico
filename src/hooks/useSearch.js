@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {url} from '../requests';
 import axios from 'axios';
 
 
@@ -37,7 +38,7 @@ function useSearch(query) {
         let cancel;
         axios({
             method:'GET',
-            url:'https://muskan-api.herokuapp.com/api/v1/search?query='+query,
+            url:url+'search?query='+query,
             cancelToken:new axios.CancelToken(c => cancel=c)
         }).then(res=>{
             setdata(res.data.data);
