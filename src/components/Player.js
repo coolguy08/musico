@@ -210,7 +210,7 @@ function Player() {
             
            <ImageWrapper>
                    
-                   <Image src={song.image} width="280px" height="280px"/>
+                   <Image src={song.image.replace('150x150','250x250')} width="280px" height="280px"/>
                    
                    
            </ImageWrapper>
