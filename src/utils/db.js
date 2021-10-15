@@ -45,7 +45,7 @@ const addToPlaylist=(song,fromserver)=>{
     const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
 
     if(loginStatus && fromserver==undefined){
-        let r=AddSong({guid:guid,song:song});
+        let r=AddSong({guid:guid,songid:song.id});
     }
   
     song.type="song";
@@ -61,7 +61,7 @@ const removeFromPlaylist=(id)=>{
     const guid= loginStatus?(JSON.parse(localStorage.user)).googleId:null;
 
     if(loginStatus){
-       let r=RemoveSong({guid:guid,id:id});
+       let r=RemoveSong({guid:guid,songid:id});
     }
 
     db=request.result;
