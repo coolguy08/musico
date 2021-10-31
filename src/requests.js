@@ -31,7 +31,7 @@ const GetSearch=async(query)=>{
 }
 
 const GetSongURL=async(id)=>{
-    const res=await get(url+`getsongurl?id=${id}&bitrate=${sessionStorage.quality}`);
+    const res=await get(url+`getsongurl?id=${id}&bitrate=${localStorage.quality}`);
     return res.data;
 }
 

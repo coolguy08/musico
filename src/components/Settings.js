@@ -26,7 +26,7 @@ function Settings() {
 
     const user=useSelector((state)=>state.Auth.user);
     const dispatch=useDispatch();
-    const [bitrate, setbitrate] = useState(sessionStorage.quality || '96');
+    const [bitrate, setbitrate] = useState(localStorage.quality || '96');
     const history=useHistory();
 
     async function logout(){
@@ -39,7 +39,7 @@ function Settings() {
 
     function handlechange(e){
         setbitrate(e.target.value)
-        sessionStorage.quality=Qualitymap[e.target.value];
+        localStorage.quality=Qualitymap[e.target.value];
     }
 
     useEffect(() => {

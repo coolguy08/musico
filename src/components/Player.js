@@ -4,7 +4,7 @@ import { Playnext, Playprev, togglePlay } from '../utils/controls';
 import { Text } from '../styles/Styles';
 import {addToPlaylist, checkInPlaylist, removeFromPlaylist} from '../utils/db';
 import Back from './Back';
-import { share } from '../utils/common';
+import { imageQuality, share } from '../utils/common';
 import {  GetLyrics } from '../requests';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from './Error404';
@@ -210,7 +210,7 @@ function Player() {
             
            <ImageWrapper>
                    
-                   <Image src={song.image.replace('150x150','250x250')} width="280px" height="280px"/>
+                   <Image src={imageQuality(song.image)} width="280px" height="280px"/>
                    
                    
            </ImageWrapper>

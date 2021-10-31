@@ -133,6 +133,7 @@ const search_song=async(query)=>{
        for(let i=0;i<data.length;i++){
            let obj=data[i];
            let songname=obj.title.toLowerCase();
+           songname+=" "+obj.description.toLowerCase();// so that search by singer is possible
            if(songname.indexOf(song)>=0){
                res.push(obj);
            }
