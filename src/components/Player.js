@@ -8,7 +8,7 @@ import { imageQuality, share } from '../utils/common';
 import {  GetLyrics } from '../requests';
 import {useDispatch, useSelector} from 'react-redux';
 import Error404 from './Error404';
-import { setsongloading } from '../redux/actions/song';
+import { setsongloading,setlyrics,setlyricsloading } from '../redux/actions/song';
 
 
 
@@ -23,8 +23,10 @@ function Player() {
     const [like, setlike] = useState(false);
 
 
-    const [lyricsloading, setlyricsloading] = useState(true);
-    const [lyrics, setlyrics] = useState('');
+    const lyricsloading = useSelector((state)=>state.song.lyricsloading);
+
+    const lyrics = useSelector((state)=>state.song.lyrics);
+
     
     const [seekerpos, setseekerpos] = useState(localStorage.getItem('currentTime') || 0);
     const audio=document.getElementById('player');
@@ -36,19 +38,23 @@ function Player() {
 
 
       async function  get(){
-        setlyricsloading(true);
+        if(lyrics!==''){
+          return;
+        }
+
+        dispatch(setlyricsloading(true));
         const res=await GetLyrics(song?song.id:'');
         if(res.data && res.data.lyrics){
-          setlyrics(res.data.lyrics);
+          dispatch(setlyrics(res.data.lyrics));
           document.body.scrollTop = 0;
           
         // This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
         window.scrollTo(0,0);
         }
         else{
-          setlyrics('No Lyrics Found')
+          dispatch(setlyrics('No Lyrics Found'));
         }
-        setlyricsloading(false);
+        dispatch(setlyricsloading(false));
 
         
       }
@@ -57,7 +63,7 @@ function Player() {
       return () => {
         
       }
-    }, [song])
+    }, [song]);
 
 
     async function onlikecliked(){

@@ -15,3 +15,17 @@ export const setsongloading=(loading)=>{
 
     }
 }
+
+export const setlyrics=(lyrics)=>{
+     return {
+       type:ActionTypes.SET_LYRICS,
+       payload:lyrics
+     }
+}
+
+export const setlyricsloading=(loading)=>{
+    return {
+        type:ActionTypes.SET_LYRICS_LOADING,
+        payload:loading
+    }
+}
