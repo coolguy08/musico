@@ -39,6 +39,7 @@ function Player() {
 
       async function  get(){
         if(lyrics!==''){
+          window.scrollTo(0,0);
           return;
         }
 
