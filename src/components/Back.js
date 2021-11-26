@@ -24,7 +24,7 @@ border-radius:${props=>props.BorderRadius};
 outline:none;
 color:${props=>props.color};
 font-size:${props=>props.size};
-position:absolute;
+position:fixed;
 left:20px;
 top:20px;
 z-index:1;

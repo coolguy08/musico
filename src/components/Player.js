@@ -258,13 +258,13 @@ function Player() {
             
             <ToolBar>
                 <Icon color={like?"red":"white"} size="1.8em" onClick={onlikecliked}><i class="fa fa-heart"></i></Icon>
-                <Icon color="white" size="1.8em" onClick={()=>Playprev(dispatch)}><i class="fa fa-chevron-circle-left"></i></Icon>
+                <Icon color="white" size="1.8em" onClick={()=>(!loading && Playprev(dispatch))}><i class="fa fa-chevron-circle-left"></i></Icon>
                 {
                   loading?<div className="loader" style={{margin:"5px"}}></div>:
                   <Icon color="white" size="2.3em" onClick={togglePlay}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></Icon>
 
                 }
-                <Icon color="white" size="1.8em" onClick={()=>Playnext(dispatch)}><i class="fa fa-chevron-circle-right"></i></Icon>
+                <Icon color="white" size="1.8em" onClick={()=>(!loading && Playnext(dispatch))}><i class="fa fa-chevron-circle-right"></i></Icon>
                 <Icon color="white" size="1.8em" onClick={()=>share({title:song.title,url:song.share_url,text:song.title})}><i class="fa fa-share-alt"></i></Icon>
 
             </ToolBar>

@@ -26,15 +26,21 @@ function Cards(props){
        }
 }
 
-function SimpleCard({data,width,height})
+function SimpleCard({data,width,height,nodeid})
 {
 
     const history=useHistory();
+
+    const handleClick=(val)=>{
+        history.push(`/view/${val.type}/${getid(val.perma_url)}`);
+        sessionStorage.setItem('home',nodeid);
+    }
+
     return (
         <>
         {
             data.map((val,index)=>{
-                return <Wrapper key={val.id+index} onClick={()=>history.push(`/view/${val.type}/${getid(val.perma_url)}`)} width={width} height={height}>
+                return <Wrapper   key={getid(val.perma_url)} onClick={()=>handleClick(val)} width={width} height={height}>
                 
                 <LazyLoadImage
     
@@ -58,14 +64,21 @@ function SimpleCard({data,width,height})
     )
 }
 
-function CircularCard({data})
+function CircularCard({data,nodeid})
 {
     const dispatch=useDispatch();
+
+    const handleClick=(val)=>{
+        PlayRadio(val.title,val.more_info.featured_station_type,dispatch)
+        sessionStorage.setItem('home',nodeid);
+    }
+
     return (
         <>
         {
             data.map((val,index)=>{
-                return <Wrapper key={val.id+index} onClick={()=>PlayRadio(val.title,val.more_info.featured_station_type,dispatch)}>
+                
+                return <Wrapper key={val.id+index}  onClick={()=>handleClick(val)}>
      
                 <LazyLoadImage
                 
@@ -91,12 +104,18 @@ function CircularCard({data})
 function RectangleCard(props)
 {
     const history=useHistory();
+
+    const handleClick=(val)=>{
+       let k= props.datatype==='charts'?history.push(`/view/playlist/${getid(val.perma_url)}`):null;
+       sessionStorage.setItem('home',props.nodeid);
+    }
+
     
     return (
         <>
         {
             props.data.map((val,index)=>{
-                return <Wrapper width="150px" key={val.id+index} onClick={props.datatype==='charts'?()=>history.push(`/view/playlist/${getid(val.perma_url)}`):()=>{}}>
+                return <Wrapper width="150px" key={val.id+index} onClick={()=>handleClick(val)}>
                 <LazyLoadImage
                 
                 effect="blur"
