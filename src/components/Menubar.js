@@ -112,19 +112,20 @@ function MenuItem({children,active})
 }
 
 function NowPlaying({song,history,loading}){
+
     const audio=document.getElementById('player');
    
     
-      return <SmallPlayer>
-            <Image src={song.image} width="50px" height="50px" onClick={()=>history.push('/player')}/>
-            <TextWrapper onClick={()=>history.push('/player')}>
+      return <SmallPlayer onClick={()=>history.push('/player')}>
+            <Image src={song.image} width="50px" height="50px" />
+            <TextWrapper >
             <Text color="white" family="Poppins" size="0.9em" width="200px">{song.title}</Text>
             <Text color="gray" family="Poppins" size="0.7em" width="220px"><marquee>{song.description || song.subtitle}</marquee></Text>
             </TextWrapper>
              {
                  loading?
                  <Loader width="20px" height="20px"/>:
-                 <PlayerIcon onClick={()=>togglePlay()}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></PlayerIcon>
+                 <PlayerIcon onClick={(e)=>{togglePlay();e.stopPropagation()}}><i class={audio.paused?"fa fa-play":"fa fa-pause"} id="toggleplay"></i></PlayerIcon>
 
              }
           </SmallPlayer>
@@ -145,6 +146,7 @@ border-radius:5px;
 `
 
 const SmallPlayer=styled.div`
+cursor:pointer;
 background:#2a2d36;
 border-top:0.25px solid gray;
 display:flex;

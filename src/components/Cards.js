@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 
  
 function Cards(props){ 
+
        // this is a default card
        if(props.cardtype==="circle")
        {
@@ -141,7 +142,7 @@ export default Cards
 
 
 const zoomout=keyframes`
-0%{transform:scale(0.9)}
+0%{transform:scale(0.94)}
 100%{transform:scale(1.0)}
 
 `
@@ -151,7 +152,10 @@ width:${props=>props.width || '100px'};
 padding:5px;
 
 animation-duration:1s;
+cursor:pointer;
 animation-iteration-count: 1;
+transition:${zoomout} 2s;
+animation-timing-function: ease-in-out;
 &:hover{
     animation-name: ${zoomout};
 
