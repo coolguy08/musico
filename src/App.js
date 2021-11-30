@@ -23,7 +23,19 @@ function App(){
 
   const dispatch=useDispatch();
 
+
+  function toggleonspace(event){
+    
+      if(event.key==" " && event.target.localName!="input"){
+        event.preventDefault();
+        togglePlay();
+      }
+  }
+
+
   useEffect(() => {
+
+    document.addEventListener("keypress",toggleonspace);
 
     if ('mediaSession' in window.navigator){
    
@@ -37,10 +49,12 @@ function App(){
       
   }
     const song=JSON.parse(localStorage.getItem('current'));
+
     if(song){
       
       document.getElementById('player').src=song.url;
     }
+
     return () => {
       
     }
