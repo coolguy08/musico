@@ -8,10 +8,12 @@ import Header from './Header';
 import { useState } from 'react';
 import Cards from './Cards';
 
+
 function Home() {
     
    
     const {loading,data}=useGetLaunchData();
+
 
     useEffect(() => {
 
