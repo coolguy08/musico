@@ -7,6 +7,7 @@ import Loading from './components/Loading';
 import { useDispatch } from 'react-redux';
 import { Playnext, Playprev, togglePlay } from './utils/controls';
 
+
 const Home = lazy(() => import('./components/Home'));
 const View = lazy(() => import('./components/View'));
 const Search = lazy(() => import('./components/Search'));
@@ -16,6 +17,7 @@ const Artist = lazy(() => import('./components/Artist'));
 const Player = lazy(() => import('./components/Player'));
 const Settings = lazy(() => import('./components/Settings'));
 const Error404 = lazy(() => import('./components/Error404'));
+const Songs = lazy(() => import('./components/Songs'));
 
 
 
@@ -72,6 +74,7 @@ function App(){
             <Route exact path="/home" component={Home}/>
             <Route exact path="/view/:type/:id" component={View}/>
             <Route exact path="/search" component={Search}/>
+            <Route exact path="/songs/:query/:page" component={Songs}/>
             <Route exact path="/browse" component={Browse}/>
             <Route exact path="/mylibrary" component={MyLibrary}/>
             <Route exact path="/player" component={Player}/>

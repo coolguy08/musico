@@ -5,6 +5,7 @@ import useSearch from '../hooks/useSearch';
 import { Text } from '../styles/Styles';
 import List from './List';
 import Loading from './Loading';
+import {Link} from 'react-router-dom';
 
 
 
@@ -17,9 +18,6 @@ function Search() {
         setquery(e.target.value);
         sessionStorage.setItem('query',e.target.value);
     }
-   
-   
-
     
     const {loading,data}=useSearch(query);
     
@@ -40,9 +38,23 @@ function Search() {
             <ListWrapper>
             
             {data.topquery.data.length>0 && <List data={data.topquery.data} title="Top Results" />}
+            {
+            data.songs.data.length>0 && <>
+            <List data={data.songs.data} title="Songs" />
+            <More>
+               
+                <Link style={{"color":"white","textDecoration":"none"}} 
+                to={`songs/${query}/1`}>
+                    <Icon><i class="fa fa-angle-right"></i></Icon>
+                </Link>
+            </More>
+            
+            </>
+            
+            }
             {data.playlists.data.length>0 && <List data={data.playlists.data} title="PlayLists" />}
             
-            {data.songs.data.length>0 && <List data={data.songs.data} title="Songs" />}
+           
             {data.albums.data.length>0 && <List data={data.albums.data} title="Albums" />}
             
             
@@ -79,6 +91,19 @@ padding-top:20px;
 
 
 `
+const More=styled.div`
+ display:flex;
+justify-content:right;
+margin-right:20px
+`
+const Icon=styled.div`
+font-size:25px;
+color:inherit;
+padding:0px;
+margin:0px;
+`
+
+
 const ListWrapper=styled.div`
 padding-top:55px;
 padding-bottom:150px;

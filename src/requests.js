@@ -45,6 +45,11 @@ const GetSongs=async(radio,radiotype,artistid,type)=>{
     return res.data;
 }
 
+const GetMoreSongs=async(query,page)=>{
+    const res=await get(url+`getsongs?query=${query}&page=${page}`);
+    return res.data;
+}
+
 const GetLyrics=async(id)=>{
     
     const res=await get(url+`getlyrics?id=${id}`);
@@ -139,6 +144,7 @@ export{
     GetSongURL,
     GetDetails,
     GetSongs,
+    GetMoreSongs,
     GetLyrics,
     AddSong,
     Signout,
