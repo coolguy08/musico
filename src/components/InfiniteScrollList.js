@@ -22,11 +22,17 @@ function InfiniteScrollList(props){
     const [songs,setsongs]=useState(props.data);
     const [query,setquery]=useState(props.query);
     const [loading,setloading]=useState(false);
+    const [hasmore,sethasmore]=useState(true);
 
     const getsongs=async()=>{
         setloading(true);
         const res=await GetMoreSongs(query,page);
-        setsongs([...songs,...res.data]); 
+        if(res.data.length>0){
+          setsongs([...songs,...res.data]); 
+         }
+         else{
+           sethasmore(false);
+         }
         setloading(false);   
     }
 
@@ -49,7 +55,7 @@ function InfiniteScrollList(props){
 
     useEffect(()=>{
 
-        if(target.current){
+        if(target.current && hasmore){
           observer.observe(target.current);
         }
     
